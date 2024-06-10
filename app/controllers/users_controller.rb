@@ -53,6 +53,7 @@ class UsersController < ApplicationController
 
   def account_creation
     @user = User.find(params[:id])
+    
     return if @user.email.include?('tamu.edu')
 
     @user.update(donor: true)

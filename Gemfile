@@ -31,6 +31,9 @@ gem 'jbuilder'
 # omniauth for google login
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
+
+# auth0 login
+gem 'omniauth-auth0', '~> 3.0'
 gem 'omniauth-rails_csrf_protection'
 
 # bootstrap for styling

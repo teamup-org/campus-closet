@@ -45,11 +45,12 @@
         </ul>
         <div class="navbar-text">
           <% if current_user.present? %>
-            <%= link_to 'Sign out', signout_path %>
+            <%= button_to 'Logout', signout_path, method: :get, data: { turbo: false } %>
           <% else %>
-            <%= button_to "Login with Google", "/auth/google_oauth2", method: :post, data: { turbo: "false" }, class: "btn btn-secondary" %>
+            <%= button_to 'Login', auth0_login_path, method: :post, data: { turbo: false } %>
           <% end %>
         </div>
+
       </div>
     </div>
   </nav>

@@ -23,11 +23,11 @@ Rails.application.routes.draw do
   # root "posts#index"
   root 'items#index'
 
-  #OAuth Routes
-  get '/auth/google_oauth2', as: 'google_login'
-  get '/auth/:google_oauth2/callback', to: 'sessions#create'
-  get '/auth/failure', to: redirect('/')
-  get '/signout', to: 'sessions#destroy', as: 'signout'
+  # Auth0 routes
+  get '/auth/auth0', as: 'auth0_login'
+  get '/auth/auth0/callback', to: 'sessions#create'
+  get '/auth/failure', to: 'auth0#failure'
+  get '/auth/logout', to: 'sessions#destroy', as: 'signout'
 
   # chat routes
   # mount ActionCable.server => '/cable'
