@@ -11,12 +11,18 @@ Given('I am on the student profile page') do
   visit(href)
 end
 
+
 Given('there is a request for item {int} uploaded by user {int} from user {int}') do |item_id, donor_id, receiver_id|
-  donor = User.find(donor_id)
-  receiver = User.find(receiver_id)
-  item = Item.find(item_id)
-  Request.create(donor:, receiver:, item:, time_slot_id: TimeSlot.first.id)
+  donor = User.find_by(id: donor_id)
+  receiver = User.find_by(id: receiver_id)
+  item = Item.find_by(id: item_id)
+  
+  time_slot = TimeSlot.first_or_create!(start_time: Time.now, end_time: Time.now + 1.hour)
+
+  Request.create!(donor: donor, receiver: receiver, item: item, time_slot: time_slot)
 end
+
+
 
 When('I click the current request') do
   # simulate button press

@@ -17,7 +17,7 @@ Scenario: Fill in Account Creation w/ Donor Field
 Scenario: User has both student and donor roles
     Given I have an account, "test_student_donor@tamu.edu", with student and donor roles
     And I am on the Login page
-    When I click "Login with Google", "test_student_donor@tamu.edu"
+    When I click "Login", "test_student_donor@tamu.edu"
     Then I should be logged in
     And I should be put on the homepage
     And I should see "Donor Dashboard" on the navbar

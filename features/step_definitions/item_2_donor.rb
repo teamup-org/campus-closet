@@ -5,7 +5,7 @@ Then('I should be on a new item page') do
 end
 
 Then('my name should be assigned') do
-  expect(page).to have_content('Donor: Example User')
+  expect(page).to have_content('Donor: Test Donor')
 end
 
 Then('I should return back to the homepage') do
