@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get 'signups/new'
+  get 'signup', to: 'signups#new', as: 'signup'
   resources :reviews
   resources :time_slots
   resources :requests
@@ -21,7 +21,6 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   # Defines the root path route ("/")
-  # root "posts#index"
   root 'items#index'
 
   #OAuth Routes
@@ -44,15 +43,10 @@ Rails.application.routes.draw do
   get 'users/:id/student', to: 'users#show_student', as: 'user_student'
   get 'users/:id/donor', to: 'users#show_donor', as: 'user_donor'
 
-  resources :items
-
   resources :items do
     resource :chatroom do
       resources :messages, only: [:create, :destroy]
     end
-  end
-
-  resources :items do
     member do
       patch :image_upload
     end
@@ -62,13 +56,4 @@ Rails.application.routes.draw do
   patch "/items/:id/mark_unavailable", to: "items#mark_unavailable", as: 'mark_unavailable_item'
   get 'items/by_type/:type', to: 'items#by_type', as: :items_by_type
   resources :items, except: :show # Exclude the show action from the resources
-
-end
-
-Rails.application.routes.draw do
-  # Define the route for the signup page
-  get 'signups/new', to: 'signups#new', as: 'new_signup'
-  
-  # You can define other routes here
-  # root 'welcome#index' # Uncomment and modify if you have a welcome page
 end
