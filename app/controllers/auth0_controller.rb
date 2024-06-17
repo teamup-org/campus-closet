@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Auth0Controller < ApplicationController
   def failure
     # Handles failed authentication
