@@ -50,12 +50,14 @@ RSpec.describe UsersController, user: :controller do
     it 'returns a success response for logged-in user' do
       OmniAuth.config.test_mode = true
       OmniAuth.config.add_mock(
-        :google_oauth2,
+        :auth0,
+        uid: 'auth0|123456789',
+        provider: 'auth0',
         info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
       )
 
       # Log in the user by creating a session
-      user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+      user = User.from_omniauth(OmniAuth.config.mock_auth[:auth0])
       session[:user_id] = user.id
 
       get :edit, params: { id: user.id }

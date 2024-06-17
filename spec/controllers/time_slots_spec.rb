@@ -26,11 +26,13 @@ RSpec.describe TimeSlotsController, type: :controller do
     it 'returns a success response' do
       OmniAuth.config.test_mode = true
       OmniAuth.config.add_mock(
-        :google_oauth2,
+        :auth0,
+        uid: 'auth0|123456789',
+        provider: 'auth0',
         info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
       )
-
-      user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+    
+      user = User.from_omniauth(OmniAuth.config.mock_auth[:auth0])
       time_slot = TimeSlot.create(
         donor: user,
         start_time: DateTime.now.beginning_of_hour + 1.day,
@@ -40,17 +42,20 @@ RSpec.describe TimeSlotsController, type: :controller do
       get :show, params: { id: time_slot.id }
       expect(response).to be_successful
     end
+    
   end
 
   describe 'GET #edit' do
     it 'returns a success response' do
       OmniAuth.config.test_mode = true
       OmniAuth.config.add_mock(
-        :google_oauth2,
+        :auth0,
+        uid: 'auth0|123456789',
+        provider: 'auth0',
         info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
       )
-
-      user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+    
+      user = User.from_omniauth(OmniAuth.config.mock_auth[:auth0])
       time_slot = TimeSlot.create(
         donor: user,
         start_time: DateTime.now.beginning_of_hour + 1.day,
@@ -60,16 +65,20 @@ RSpec.describe TimeSlotsController, type: :controller do
       get :edit, params: { id: time_slot.id }
       expect(response).to be_successful
     end
+  
   end
 
   describe 'DELETE #destroy' do
     OmniAuth.config.test_mode = true
     OmniAuth.config.add_mock(
-      :google_oauth2,
+      :auth0,
+      uid: 'auth0|123456789',
+      provider: 'auth0',
       info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
     )
-
-    user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+    
+    user = User.from_omniauth(OmniAuth.config.mock_auth[:auth0])
+    
     time_slot = TimeSlot.create(
       donor: user,
       start_time: DateTime.now.beginning_of_hour + 1.day,
@@ -94,10 +103,12 @@ RSpec.describe TimeSlotsController, type: :controller do
     let(:user) do
       OmniAuth.config.test_mode = true
       OmniAuth.config.add_mock(
-        :google_oauth2,
+        :auth0,
+        uid: 'auth0|123456789',
+        provider: 'auth0',
         info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
       )
-      donor_user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+      donor_user = User.from_omniauth(OmniAuth.config.mock_auth[:auth0])
       session[:user_id] = donor_user.id
       donor_user
     end
@@ -117,10 +128,12 @@ RSpec.describe TimeSlotsController, type: :controller do
       let(:user) do
         OmniAuth.config.test_mode = true
         OmniAuth.config.add_mock(
-          :google_oauth2,
+          :auth0,
+          uid: 'auth0|123456789',
+          provider: 'auth0',
           info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
         )
-        User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+        User.from_omniauth(OmniAuth.config.mock_auth[:auth0])
       end
 
       before do
@@ -168,11 +181,14 @@ RSpec.describe TimeSlotsController, type: :controller do
       let(:user) do
         OmniAuth.config.test_mode = true
         OmniAuth.config.add_mock(
-          :google_oauth2,
+          :auth0,
+          uid: 'auth0|123456789',
+          provider: 'auth0',
           info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
         )
-        User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+        User.from_omniauth(OmniAuth.config.mock_auth[:auth0])
       end
+      
 
       let(:time_slot) do
         TimeSlot.create(
@@ -222,11 +238,14 @@ RSpec.describe TimeSlotsController, type: :controller do
   describe 'PUT #mark_unavailable' do
     OmniAuth.config.test_mode = true
     OmniAuth.config.add_mock(
-      :google_oauth2,
+      :auth0,
+      uid: 'auth0|123456789',
+      provider: 'auth0',
       info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
     )
-
-    user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+    
+    user = User.from_omniauth(OmniAuth.config.mock_auth[:auth0])
+    
     time_slot = TimeSlot.create(
       donor: user,
       start_time: DateTime.now.beginning_of_hour + 1.day,
@@ -263,13 +282,17 @@ RSpec.describe TimeSlotsController, type: :controller do
     end
   end
   describe '#build_time_slot' do
+
     OmniAuth.config.test_mode = true
     OmniAuth.config.add_mock(
-      :google_oauth2,
+      :auth0,
+      uid: 'auth0|123456789',
+      provider: 'auth0',
       info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
     )
 
-    user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+    user = User.from_omniauth(OmniAuth.config.mock_auth[:auth0])
+
     it 'builds a new time slot for the current user with status "available"' do
       time_slot_param = { start_time: Time.now, end_time: Time.now + 1.hour }
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
