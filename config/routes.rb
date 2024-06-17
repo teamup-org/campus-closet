@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'signups/new'
   resources :reviews
   resources :time_slots
   resources :requests
@@ -62,4 +63,12 @@ Rails.application.routes.draw do
   get 'items/by_type/:type', to: 'items#by_type', as: :items_by_type
   resources :items, except: :show # Exclude the show action from the resources
 
+end
+
+Rails.application.routes.draw do
+  # Define the route for the signup page
+  get 'signups/new', to: 'signups#new', as: 'new_signup'
+  
+  # You can define other routes here
+  # root 'welcome#index' # Uncomment and modify if you have a welcome page
 end
