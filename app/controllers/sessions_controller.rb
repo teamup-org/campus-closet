@@ -18,7 +18,20 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session.delete(:user_id)
-    redirect_to root_path
+    # Clear the session
+    reset_session
+    
+    # Have user go through authentication 
+    # Redirect to Auth0 logout 
+    auth0_domain = ENV['AUTH0_DOMAIN']
+    client_id = ENV['AUTH0_CLIENT_ID']
+    return_to = root_url
+
+    redirect_to "https://#{auth0_domain}/v2/logout?client_id=#{client_id}&returnTo=#{return_to}", allow_other_host: true
   end
+
+  # def destroy
+  #   session.delete(:user_id)
+  #   redirect_to root_path
+  # end
 end
