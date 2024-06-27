@@ -63,7 +63,9 @@ class UsersController < ApplicationController
     return unless @user.update(user_params)
 
     @user.update(student: @user.email.include?('tamu.edu'))
-    redirect_to root_path, notice: 'Account created successfully.'
+    redirect_to root_path, notice: "Account created successfully. Welcome to Campus Closet, #{@user.first}!"
+
+
     # else
     # render :edit
   end

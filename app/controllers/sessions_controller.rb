@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     else
       user.save if user.changed?
       session[:user_id] = user.id
-      redirect_to root_path
+      redirect_to root_path, notice: "Welcome back, #{user.first}!"
     end
   end
 
