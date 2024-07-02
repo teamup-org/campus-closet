@@ -1,74 +1,87 @@
-<p style="color: green"><%= notice %></p>
+<!-- app/views/students/show.html.erb -->
 
-<h1> Welcome to the Student Dashboard, <%= @user.first %></h1>
+<p class="notice"><%= notice %></p>
 
-<div style="float: right; margin-right: 20px;">
-  <div><strong>Account Details</strong><br></div>
-  <%= render @user %>
-  <div>
-    <%= link_to "Edit Account", edit_user_path(@user), class: "btn btn-outline-primary" %>
-    <%= button_to "Delete Account", @user, method: :delete, class: "btn btn-danger btn-sm" %>
+<div class="header-account-container">
+  <div class="account-details-container profile">
+    <div><strong>Contact Info</strong><br></div>
+    <%= render @user %>
+  </div>
+
+  <div class="header-container">
+    <h1 class="center-header"><%= @user.first %> <%= @user.last %></h1>
+    <%= link_to "Edit Profile", edit_user_path(@user), class: "btn btn-outline-primary edit-profile" %>
   </div>
 </div>
 
-<h2>Past Pickups:</h2>
-<% if @user.received_pickups.count == 0 %>
-  <h3>No Past Pickups</h3>
-<% else %>
-  <div class="row">
-    <% @user.received_pickups.each do |pickup| %>
-    <div class="col-md-3 mb-3">
-      <div class="card">
-        <% if pickup.item.image_url.present? %>
-          <%= image_tag pickup.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: contain; height: 250px;" %>
-        <% else %>
-          <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 250px;">
-        <% end %>
-        <div class="card-body">
-          <%= render pickup %>
-        </div>
-      </div>
-    </div>
-    <% end %>
-  </div>
-<% end %>
-
-<h2>Current Requests:</h2>
-<div class="row">
-  <% if @user.received_requests.count == 0 %>
-    <h3>No Current Requests</h3>
-  <% else %>
-    <% @user.received_requests.each do |request| %>
-      <div class="col-md-3 mb-3">
-        <div class="card">
-          <% if request.item.image_url.present? %>
-            <%= image_tag request.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: contain; height: 250px;" %>
-          <% else %>
-            <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 250px;">
-          <% end %>
-          <div class="card-body">
-            <%= render request %>
-            <div class ="chat-btn-container">
-              <%= link_to "Chat", item_chatroom_path(request.item), class: "btn btn-primary btn-lg"%>
-              <p></p>
+<div class="content-container">
+  <div class="section">
+    <h2>Past Pickups:</h2>
+    <% if @user.received_pickups.count == 0 %>
+      <h3>No Past Pickups</h3>
+    <% else %>
+      <div class="row">
+        <% @user.received_pickups.each do |pickup| %>
+          <div class="col-md-3 mb-3">
+            <div class="card vector-box">
+              <% if pickup.item.image_url.present? %>
+                <%= image_tag pickup.item.image_url, class: "card-img-top img-fluid", alt: "Item Image" %>
+              <% else %>
+                <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available">
+              <% end %>
+              <div class="card-body">
+                <%= render pickup %>
+              </div>
             </div>
-            <% if request.receiver && request.donor.latitude %>
-            <div class="btn btn-primary btn-lg">
-              <%= button_tag "Show Map", class: "show-map-button", onclick: "showMap('map-container-#{request.id}')" %>
-            </div>
-            <div id="map-container-<%= request.id %>" class="map_container">
-              <%= js_map [{latitude: request.donor.latitude, longitude: request.donor.longitude}], height: "300px", controls: true %>
-            </div>
-          <% else %>
-            <p>Receiver location not available.</p>
-          <% end %>
           </div>
-        </div>
+        <% end %>
       </div>
     <% end %>
-  <% end %>
+  </div>
+
+  <div class="section">
+    <h2>Current Requests:</h2>
+    <% if @user.received_requests.count == 0 %>
+      <h3>No Current Requests</h3>
+    <% else %>
+      <div class="row">
+        <% @user.received_requests.each do |request| %>
+          <div class="col-md-3 mb-3">
+            <div class="card vector-box">
+              <% if request.item.image_url.present? %>
+                <%= image_tag request.item.image_url, class: "card-img-top img-fluid", alt: "Item Image" %>
+              <% else %>
+                <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available">
+              <% end %>
+              <div class="card-body">
+                <%= render request %>
+                <div class="chat-btn-container">
+                  <%= link_to "Chat", item_chatroom_path(request.item), class: "btn btn-primary btn-lg" %>
+                  <p></p>
+                </div>
+                <% if request.receiver && request.donor.latitude %>
+                  <div class="btn btn-primary btn-lg">
+                    <%= button_tag "Show Map", class: "show-map-button", data: { map_container_id: "map-container-#{request.id}" } %>
+                  </div>
+                  <div id="map-container-<%= request.id %>" class="map-container">
+                    <%= js_map [{latitude: request.donor.latitude, longitude: request.donor.longitude}], height: "300px", controls: true %>
+                  </div>
+                <% else %>
+                  <p>Receiver location not available.</p>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>
 
+<div class="bottom-container">
+  <%= button_to "Logout", signout_path, method: :get, data: { turbo: false }, class: "btn btn-primary btn-sm logout" %>
+  <%= button_to "Delete Account", @user, method: :delete, class: "btn btn-danger btn-sm delete-account" %>
+</div>
 
 <script>
 window.onload = function() {
@@ -85,6 +98,5 @@ function showMap(containerId) {
   } else {
     var el = document.getElementsByClassName("map_container")[containerId].setAttribute("style","display: none");
   }
-  
 }
 </script>
