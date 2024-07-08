@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'carousel/page'
+  get 'welcome/page'
   resources :reviews
   resources :time_slots
   resources :requests
@@ -28,6 +30,10 @@ Rails.application.routes.draw do
   get '/auth/:google_oauth2/callback', to: 'sessions#create'
   get '/auth/failure', to: redirect('/')
   get '/signout', to: 'sessions#destroy', as: 'signout'
+
+  #Draft Routes
+  get '/welcome', to: 'welcome#page'
+  get '/carousel', to: 'carousel#page'
 
   # chat routes
   # mount ActionCable.server => '/cable'

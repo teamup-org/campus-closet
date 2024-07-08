@@ -2,3 +2,5 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import "mapkick/bundle"
+
+import 'swiper/swiper-bundle.min.css'
