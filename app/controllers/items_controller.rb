@@ -25,6 +25,7 @@ class ItemsController < ApplicationController
     # DonorMailer.with(user: current_user).confirm_time_to_donor_email.deliver_later
     @time_slots = @item.user.time_slots
     # Tell the UserMailer to send a welcome email after save
+    @similar_items = Item.where(type_id: @item.type_id).where.not(id: @item.id).order('RANDOM()').limit(5) # limited to 5 similar items randomly select 5 items so that same items are not allows displayed
   end
 
   # GET /items/new

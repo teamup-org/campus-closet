@@ -16,6 +16,8 @@
   <div class="header-container">
     <h1 class="center-header"><%= @user.first %> <%= @user.last %></h1>
     <%= link_to "Edit Profile", edit_user_path(@user), class: "btn btn-outline-primary edit-profile" %>
+    <%= button_to "Logout", signout_path, method: :get, data: { turbo: false }, class: "btn btn-primary btn-sm logout" %>
+    <%= button_to "Delete Account", @user, method: :delete, class: "btn btn-danger btn-sm delete-account" %>
   </div>
 
   <div class="time-slots-container">
@@ -171,20 +173,19 @@
   </div>
 </div>
 
-
+<!--
 <div class="bottom-container">
   <%= button_to "Logout", signout_path, method: :get, data: { turbo: false }, class: "btn btn-primary btn-sm logout" %>
   <%= button_to "Delete Account", @user, method: :delete, class: "btn btn-danger btn-sm delete-account" %>
-</div>
-
-
+</div> 
+-->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const timeSlotButtons = document.querySelectorAll('.time-slot button');
 
     timeSlotButtons.forEach(button => {
       button.addEventListener('click', function() {
-        
+
       });
     });
   });
@@ -264,6 +265,6 @@ function showMap(containerId) {
   } else {
     var el = document.getElementsByClassName("map_container")[0].setAttribute("style","display: none");
   }
-  
+
 }
 </script>

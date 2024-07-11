@@ -1,37 +1,37 @@
+<!-- show.html.erb -->
 <% if !current_user %>
   <div style="display: flex; justify-content: center; align-items: center;">
     <div style="width: 50%; max-width: 500px; padding: 5px; border: 1px solid #ccc; border-radius: 5px;">
       <div class="card">
         <div class="card-body">
           <%= render @item %>
+        </div>
       </div>
     </div>
   </div>
-
 <% elsif current_user.id == @item.user.id %>
   <div style="display: flex; justify-content: center; align-items: center;">
     <div style="width: 50%; max-width: 500px; padding: 5px; border: 1px solid #ccc; border-radius: 5px;">
       <div class="card">
         <div class="card-body">
           <%= render @item %>
-            <div class="card-text">
-              <%= link_to "Edit this item", edit_item_path(@item), class: "btn btn-outline-primary" %>
-              <%= button_to "Destroy this item", @item, method: :delete, class: "btn btn-danger btn-sm" %>
-            </div>
+          <div class="card-text">
+            <%= link_to "Edit this item", edit_item_path(@item), class: "btn btn-outline-primary" %>
+            <%= button_to "Destroy this item", @item, method: :delete, class: "btn btn-danger btn-sm" %>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
 <% else %>
-  <div style="display: flex;">
-  <div style="display: flex; justify-content: center; align-items: center;">
+  <div style="display: flex; justify-content: center;">
     <div style="width: 50%; max-width: 500px; padding: 5px; border: 1px solid #ccc; border-radius: 5px;">
       <div class="card">
         <div class="card-body">
           <%= render @item %>
+        </div>
       </div>
     </div>
-  </div>
     <div style="flex: 1; padding: 10px;">
       <div style="float: right;">
         <%= month_calendar(events: @time_slots, class: "text-center") do |date, time_slots| %>
@@ -50,6 +50,26 @@
     </div>
   </div>
 <% end %>
+
+<!-- Similar Listings Block -->
+<div class="similar-listings" style="margin-top: 20px;">
+  <h3>Similar Listings</h3>
+  <div class="listings-container" style="display: flex; flex-wrap: wrap; justify-content: center;">
+    <!-- Loop through similar listings and render them -->
+    <% @similar_items.each do |similar_item| %>
+      <div class="listing-card" style="width: 200px; margin: 10px;">
+        <div class="card">
+          <div class="card-body">
+            <%= render similar_item %>
+            <p class="card-text">
+              <%= link_to "Show this item", similar_item, class: "btn btn-primary" %>
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -101,33 +121,33 @@
             console.error('Error:', error);
           });
 
-        fetch('/requests', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': csrfToken
-          },
-          credentials: 'same-origin',
-          body: JSON.stringify({
-            request: {
-              item_id: itemId, 
-              donor_id: donorId,
-              receiver_id: receiverId,
-              time_slot_id: timeSlotId
+          fetch('/requests', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': csrfToken
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+              request: {
+                item_id: itemId, 
+                donor_id: donorId,
+                receiver_id: receiverId,
+                time_slot_id: timeSlotId
+              }
+            })
+          })
+          .then(response => {
+            if (response.ok) {
+              console.log("created new request")
+              location.reload();
+            } else {
+              alert('Failed to create clothing request.');
             }
           })
-        })
-        .then(response => {
-          if (response.ok) {
-            console.log("created new request")
-            location.reload();
-          } else {
-            alert('Failed to create clothing request.');
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
+          .catch(error => {
+            console.error('Error:', error);
+          });
         }
       });
     });

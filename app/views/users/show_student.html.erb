@@ -11,6 +11,8 @@
   <div class="header-container">
     <h1 class="center-header"><%= @user.first %> <%= @user.last %></h1>
     <%= link_to "Edit Profile", edit_user_path(@user), class: "btn btn-outline-primary edit-profile" %>
+    <%= button_to "Logout", signout_path, method: :get, data: { turbo: false }, class: "btn btn-primary btn-sm logout" %>
+    <%= button_to "Delete Account", @user, method: :delete, class: "btn btn-danger btn-sm delete-account" %>
   </div>
 </div>
 
@@ -77,12 +79,12 @@
     <% end %>
   </div>
 </div>
-
+<!--
 <div class="bottom-container">
   <%= button_to "Logout", signout_path, method: :get, data: { turbo: false }, class: "btn btn-primary btn-sm logout" %>
   <%= button_to "Delete Account", @user, method: :delete, class: "btn btn-danger btn-sm delete-account" %>
 </div>
-
+-->
 <script>
 window.onload = function() {
   var elements = document.getElementsByClassName("map_container");
