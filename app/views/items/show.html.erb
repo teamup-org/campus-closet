@@ -55,21 +55,26 @@
 <div class="similar-listings" style="margin-top: 20px;">
   <h3>Similar Listings</h3>
   <div class="listings-container" style="display: flex; flex-wrap: wrap; justify-content: center;">
-    <!-- Loop through similar listings and render them -->
-    <% @similar_items.each do |similar_item| %>
-      <div class="listing-card" style="width: 200px; margin: 10px;">
-        <div class="card">
-          <div class="card-body">
-            <%= render similar_item %>
-            <p class="card-text">
-              <%= link_to "Show this item", similar_item, class: "btn btn-primary" %>
-            </p>
+    <% if @similar_items.any? %>
+      <!-- Loop through similar listings and render them -->
+      <% @similar_items.each do |similar_item| %>
+        <div class="listing-card" style="width: 200px; margin: 10px;">
+          <div class="card">
+            <div class="card-body">
+              <%= render similar_item %>
+              <p class="card-text">
+                <%= link_to "Show this item", similar_item, class: "btn btn-primary" %>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      <% end %>
+    <% else %>
+      <p>No similar items found.</p>
     <% end %>
   </div>
 </div>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
