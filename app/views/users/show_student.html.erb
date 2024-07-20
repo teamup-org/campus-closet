@@ -10,9 +10,12 @@
 
   <div class="header-container">
     <h1 class="center-header"><%= @user.first %> <%= @user.last %></h1>
+        <% if current_user && current_user.id == @user.id %>
+
     <%= link_to "Edit Profile", edit_user_path(@user), class: "btn btn-outline-primary edit-profile" %>
     <%= button_to "Logout", signout_path, method: :get, data: { turbo: false }, class: "btn btn-primary btn-sm logout" %>
     <%= button_to "Delete Account", @user, method: :delete, class: "btn btn-danger btn-sm delete-account" %>
+      <% end %>
   </div>
 </div>
 
@@ -56,6 +59,7 @@
                 <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available">
               <% end %>
               <div class="card-body">
+                <p><strong>Message:</strong> <%= request.message.present? ? request.message : "No message" %></p> 
                 <%= render request %>
                 <div class="chat-btn-container">
                   <%= link_to "Chat", item_chatroom_path(request.item), class: "btn btn-primary btn-lg" %>

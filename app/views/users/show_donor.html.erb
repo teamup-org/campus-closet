@@ -15,14 +15,20 @@
 
   <div class="header-container">
     <h1 class="center-header"><%= @user.first %> <%= @user.last %></h1>
+      <% if current_user && current_user.id == @user.id %>
+
     <%= link_to "Edit Profile", edit_user_path(@user), class: "btn btn-outline-primary edit-profile" %>
     <%= button_to "Logout", signout_path, method: :get, data: { turbo: false }, class: "btn btn-primary btn-sm logout" %>
     <%= button_to "Delete Account", @user, method: :delete, class: "btn btn-danger btn-sm delete-account" %>
+      <% end %>
   </div>
 
   <div class="time-slots-container">
+      <% if current_user && current_user.id == @user.id %>
+
     <%= link_to "New Time Slot", new_time_slot_path, class: "btn btn-outline-primary new-time-slot" %>
     <%= link_to "View Time Slots", time_slots_path, class: "btn btn-outline-primary view-time-slot" %>
+    <% end %>
   </div>
   </div>
 </div>
@@ -31,7 +37,7 @@
 <%= link_to "Add New Item", new_item_path, class: "btn btn-primary" %>
 
 
-  <div style="float: right; margin-right: 20px;">
+  <div style="float: right; margin-right: 250px;">
     <% if @user.time_slots.exists? %>
     <strong>Available Time Slots</strong>:
     <div class="text-center">

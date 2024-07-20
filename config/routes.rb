@@ -54,6 +54,9 @@ Rails.application.routes.draw do
   resources :items do
     member do
       patch :image_upload
+      get 'pickup_request'
+
+
     end
   end
 

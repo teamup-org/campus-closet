@@ -1,0 +1,130 @@
+/* Listing Details */
+.item-details {
+  display: flex;
+  margin-bottom: 20px;
+  padding-left: 50px; 
+}
+
+.image-container {
+  flex: 1;
+  max-width: 500px;
+  height: 500px; /* Ensure the container height remains the same */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #000000;
+}
+
+.item-image {
+  width: 100%;
+  border: 2px solid #000000;
+}
+
+.item-info {
+  flex: 1;
+  padding: 20px;
+}
+
+.item-title {
+  font-family: 'Comic Sans MS';
+  font-weight: 700;
+  font-size: 29.416px;
+  line-height: 41px;
+  color: #000000;
+}
+
+.item-info p {
+  font-family: 'Comic Sans MS';
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 21px;
+  color: #000000;
+}
+
+.donor-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 20px;
+}
+
+.donor-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.donor-title {
+  font-family: 'Comic Sans MS';
+  font-weight: 700;
+  font-size: 29.416px;
+  line-height: 41px;
+  color: #000000;
+  margin-bottom: 0; 
+}
+
+.donor-name {
+  font-family: 'Comic Sans MS';
+  font-weight: 700;
+  font-size: 22.472px;
+  line-height: 31px;
+  color: #000000;
+  margin-top: 0; 
+}
+
+
+.btn-claim {
+  margin: 10px 0;
+}
+
+.calendar-container {
+  flex: 1;
+  padding: 20px;
+}
+
+.date-header {
+  font-size: 18px;
+  color: #2c3e50;
+  font-weight: bold;
+}
+
+.time-slot {
+  background-color: #2ecc71;
+  padding: 10px;
+  margin: 10px 0;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  color: #2c3e50;
+}
+
+.similar-listings {
+  margin-top: 20px;
+}
+
+.similar-listings-header {
+  text-align: center;
+  font-family: 'Comic Sans MS';
+  font-weight: 700;
+  font-size: 29.416px;
+  line-height: 41px;
+  color: #000000;
+}
+
+.listings-container {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+}
+
+.listing-card {
+  width: 200px;
+  margin: 10px;
+}
+
+.card {
+  border: 2px solid #000000;
+}
+
+.card-body {
+  padding: 10px;
+}

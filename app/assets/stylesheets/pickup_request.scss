@@ -1,0 +1,171 @@
+/* General Styles */
+body {
+  font-family: 'Comic Sans MS', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 19px;
+  text-decoration: underline;
+  color: #000000;
+}
+
+.menu {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.menu a {
+  margin: 0 10px;
+  font-size: 15px;
+  text-decoration: underline;
+  color: #000000;
+}
+
+/* Item Details */
+
+
+.listing-card-pickup {
+  width: 500px;
+  margin: 10px;
+}
+
+.card-pickup {
+  border: 2px solid #000000;
+}
+
+.card-body-pickup {
+  padding: 0px;
+}
+
+
+.item-details {
+  display: flex;
+  margin-top: 60px;
+}
+
+.image-container-pickup {
+  flex: 1;
+  max-width: 500px;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #000000;
+}
+
+.item-image {
+  width: 100%;
+  border: 2px solid #000000;
+}
+
+.item-info {
+  flex: 1;
+  padding: 20px;
+}
+
+.item-title {
+  font-weight: 700;
+  font-size: 29.416px;
+  line-height: 41px;
+  color: #000000;
+}
+
+.item-info p {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 21px;
+  color: #000000;
+}
+
+/* Donor Information */
+.donor-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 40px;
+  margin-top: 20px;
+}
+
+.donor-details {
+  display: flex;
+  align-items: center;
+}
+
+
+.donor-title {
+  font-weight: 700;
+  font-size: 29.416px;
+  line-height: 41px;
+  color: #000000;
+}
+
+.donor-name {
+  font-weight: 700;
+  font-size: 22.472px;
+  line-height: 31px;
+  color: #000000;
+}
+
+/* Form Container */
+.form-container {
+  margin-top: 30px;
+  position: absolute;
+  top: 60px;
+  left: 550px;
+  max-width: 1000px; 
+
+  padding: 10px;
+  border: 2px solid #000000;
+  background-color: #FFFFFF;
+}
+
+.form-container h3 {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 21px;
+  color: #000000;
+}
+
+.form-container textarea {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #000000;
+  font-family: 'Comic Sans MS', sans-serif;
+  margin-bottom: 10px;
+}
+
+.form-container button {
+  padding: 10px 20px;
+  border: 2px solid #000000;
+  background: #E1E1E1;
+  font-family: 'Comic Sans MS', sans-serif;
+  cursor: pointer;
+}
+
+/* Calendar Styles */
+.calendar-container {
+  margin-top: 20px;
+}
+
+.date-header {
+  font-weight: bold;
+  font-size: 18px;
+  color: #2c3e50;
+}
+
+.time-slot {
+  background-color: #2ecc71;
+  padding: 10px;
+  margin: 10px 0;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  color: #2c3e50;
+}

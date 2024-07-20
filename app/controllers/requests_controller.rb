@@ -22,6 +22,10 @@ class RequestsController < ApplicationController
   def edit; end
 
   # POST /requests or /requests.json
+  # def create
+  #   create_and_respond(Request, :request_url, :request_params)
+  # end
+
   def create
     create_and_respond(Request, :request_url, :request_params)
   end
@@ -45,6 +49,6 @@ class RequestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def request_params
-    params.require(:request).permit(:donor_id, :receiver_id, :item_id, :time_slot_id)
+    params.require(:request).permit(:donor_id, :receiver_id, :item_id, :time_slot_id, :message)
   end
 end
