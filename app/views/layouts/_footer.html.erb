@@ -1,0 +1,110 @@
+<footer class="footer">
+  <div class="footer-content">
+    <p>© 2024 Campus Closet. All rights reserved.</p>
+    <div class="footer-social">
+      <a href="https://www.facebook.com/askcareercloset"><%= image_tag('facebook-icon.svg', alt: 'Facebook') %></a>
+      <a href="https://twitter.com/askcareercloset"><%= image_tag('twitter-icon.svg', alt: 'Twitter') %></a>
+      <a href="https://www.instagram.com/tamu_careercloset"><%= image_tag('instagram-icon.svg', alt: 'Instagram') %></a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  body {
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+  }
+
+  .content {
+    flex: 1;
+  }
+
+  .logo-img {
+    max-width: 50px;
+    max-height: 50px;
+  }
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    color: black;
+  }
+
+  #navbar-container 
+  {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #F3F3F3;
+    border-bottom: 2px solid black; 
+    border-top: 2px solid black;
+    padding: 0 25px;
+  }
+
+  .navbar-nav {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-link {
+    font-size: 18px;
+    color: black !important;
+    text-decoration: underline;
+    transition: background-color 0.3s;
+  }
+
+  .footer {
+    width: 100%;
+    background-color: #fff;
+    border-top: 2px solid black;
+    padding: 20px 0;
+    text-align: center;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    font-size: 18px;
+    margin-top: auto;
+  }
+
+  .footer-content {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  .footer p {
+    margin: 0 0 10px 0;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 20px;
+  }
+
+  .footer-social a {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+  }
+
+  .footer-social img {
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: 650px) {
+    .footer-content {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+</style>
