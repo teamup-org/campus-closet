@@ -16,6 +16,13 @@ class User < ApplicationRecord
   # for chat feature
   has_many :messages, dependent: :destroy
 
+  has_secure_password
+
+  validates :name, presence: true
+  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :password, presence: true, length: { minimum: 6 }
+  validates :password_confirmation, presence: true
+
   def self.from_omniauth(auth)
     user = where(email: auth.info.email).first_or_initialize
     names = auth['info']['name'].split

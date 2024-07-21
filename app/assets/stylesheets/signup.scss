@@ -1,86 +1,110 @@
 body {
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 600px; // Increased from 500px
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 30px; // Increased from 20px
+  width: 100%;
+
+  label {
+    display: block;
+    margin-bottom: 10px; // Increased from 5px
+    font-size: 22px; // Increased from 18px
     font-family: 'Comic Sans MS', 'Comic Sans', cursive;
-    background-color: #fff; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; 
-    margin: 0;
   }
-  
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 15px; // Increased from 10px
+    border: 2px solid #000;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 20px; // Increased from 16px
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    outline: none;
+    &::placeholder {
+      color: #999;
+    }
+  }
+
+  input[type="submit"] {
+    padding: 15px 30px; // Increased padding
+    background-color: #e0e0e0;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px; // Increased from 16px
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    text-align: center;
+    outline: none;
+    display: block;
+    margin-top: 30px; // Increased from 20px
+
+    &:hover {
+      background-color: #d0d0d0;
+    }
+  }
+}
+
+.google-signup {
+  margin-top: 20px; // Increased from 10px
+
+  .google-signup-button {
+    display: inline-block;
+    padding: 15px 30px; // Increased padding
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 20px; // Increased from 16px
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    text-align: center;
+    outline: none;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+}
+
+@media (max-width: 650px) { // Increased from 600px
   .form-container {
-    width: 500px; 
+    width: 95%;
+    padding: 10px;
   }
-  
+
   .form-group {
     margin-bottom: 20px;
-  
+
     label {
-      display: block;
-      margin-bottom: 10px; 
-      font-size: 18px; 
-      font-family: 'Comic Sans MS', 'Comic Sans', cursive; 
+      font-size: 20px;
     }
-  
+
     input[type="text"],
     input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 15px;
-      border: 2px solid #000; 
-      border-radius: 5px;
-      box-sizing: border-box;
-      font-size: 18px; 
-      font-family: 'Comic Sans MS', 'Comic Sans', cursive; 
-      outline: none;
-      &::placeholder {
-        color: #d3d3d3; 
-      }
-    }
-  
-    input[type="submit"] {
-      padding: 15px 0;
-      background-color: #d3d3d3; 
-      color: #000;
-      border: 2px solid #000;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 25%;
-      font-size: 18px;
-      font-family: 'Comic Sans MS', 'Comic Sans', cursive; 
-      text-align: center;
-      outline: none;
-  
-      &:hover {
-        background-color: #e0e0e0;
-      }
-    }
-  }
-  
-  .google-signup {
-    text-align: center; 
-    margin-top: 20px; 
-    display: flex;
-    justify-content: flex-start;
-  
+    input[type="password"],
+    input[type="submit"],
     .google-signup-button {
-      display: inline-block;
-      padding: 15px 0; 
-      background-color: #fff;
-      color: #000;
-      border: 2px solid #000; 
-      border-radius: 5px;
-      text-decoration: none;
-      width: 50%; 
-      font-size: 18px; 
-      font-family: 'Comic Sans MS', 'Comic Sans', cursive;
-      text-align: center;
-      outline: none; 
-      margin-left: 0;
-  
-      &:hover {
-        background-color: #e0e0e0;
-      }
+      font-size: 18px;
+      padding: 12px;
     }
   }
-  
+}

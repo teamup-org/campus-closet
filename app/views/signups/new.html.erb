@@ -1,5 +1,16 @@
 <div class="form-container">
-  <%= form_with url: '#', local: true do |form| %>
+  <%= form_with model: @user, local: true do |form| %>
+    <% if @user.errors.any? %>
+      <div class="error-messages">
+        <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+        <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
     <div class="form-group">
       <%= form.label :name %>
       <%= form.text_field :name, placeholder: 'Enter your name' %>
