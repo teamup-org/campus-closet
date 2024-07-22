@@ -10,8 +10,21 @@ class SessionsController < ApplicationController
       return
     end
 
-    auth = request.env['omniauth.auth']
-    user = User.from_omniauth(auth)
+    if request.env['omniauth.auth']
+      auth = request.env['omniauth.auth']
+      user = User.from_omniauth(auth)
+    else
+      user = User.find_by(email: params[:email])
+      if user && user.authenticate(params[:password])
+        session[:user_id] = user.id
+        redirect_to root_path, notice: 'Logged in successfully'
+        return
+      else
+        flash[:alert] = "Invalid email or password."
+        redirect_to login_path
+        return
+      end
+    end
 
     if user.nil?
       flash[:alert] = "Invalid email or password."
