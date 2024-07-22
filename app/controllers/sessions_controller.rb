@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
-# controller for the sessions
+# Controller for the sessions
 class SessionsController < ApplicationController
+  def new
+    # This action renders the login form
+  end
+
   def create
     auth = request.env['omniauth.auth']
     user = User.from_omniauth(auth)

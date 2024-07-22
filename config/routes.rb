@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :types
   resources :colors
   resources :items
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -23,7 +24,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root 'items#index'
 
-  #OAuth Routes
+  # OAuth Routes
   get '/auth/google_oauth2', as: 'google_login'
   get '/auth/:google_oauth2/callback', to: 'sessions#create'
   get '/auth/failure', to: redirect('/')
@@ -56,4 +57,9 @@ Rails.application.routes.draw do
   patch "/items/:id/mark_unavailable", to: "items#mark_unavailable", as: 'mark_unavailable_item'
   get 'items/by_type/:type', to: 'items#by_type', as: :items_by_type
   resources :items, except: :show # Exclude the show action from the resources
+
+  # Login routes
+  get 'login', to: 'sessions#new', as: 'login'
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy', as: 'logout'
 end
