@@ -24,6 +24,8 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, if: -> { password.present? }
 
   def self.from_omniauth(auth)
+    return nil if auth.nil?
+
     user = where(email: auth.info.email).first_or_initialize do |u|
       names = auth['info']['name'].split
       u.first = names[0]

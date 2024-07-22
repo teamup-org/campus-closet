@@ -1,5 +1,11 @@
 <div class="form-wrapper">
   <div class="form-container">
+    <% if flash[:alert] %>
+      <div class="alert alert-danger" role="alert">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+
     <%= form_with url: login_path, local: true do |form| %>
       <div class="form-group">
         <%= form.label :email %>
@@ -17,7 +23,7 @@
     <% end %>
 
     <div class="google-signup">
-      <%= link_to 'Login with Google', google_login_path, class: 'google-signup-button' %>
+      <%= link_to 'Login with Google', '#', class: 'google-signup-button' %>
     </div>
   </div>
 </div>
