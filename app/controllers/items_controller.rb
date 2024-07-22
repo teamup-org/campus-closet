@@ -13,11 +13,19 @@ class ItemsController < ApplicationController
   def index
     @items = Item.all
     @sizes = Size.all
+    @featured_items = Item.limit(15)
 
-    return unless params[:size] || params[:color] || params[:condition] || params[:gender]
+    @items = @items.search(params[:query]) if params[:query].present?
+
 
     filter_items(params[:size], params[:color], params[:condition],
                  params[:gender])
+  end
+
+  def home
+    @items = Item.all
+    @sizes = Size.all
+    @featured_items = Item.limit(15)
   end
 
   # GET /items/1 or /items/1.json

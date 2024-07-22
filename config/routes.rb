@@ -12,7 +12,8 @@ Rails.application.routes.draw do
   resources :genders
   resources :types
   resources :colors
-  resources :items
+  resources :items, except: :show
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -20,16 +21,15 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   # Defines the root path route ("/")
-  # root "posts#index"
-  root 'items#index'
+  root 'items#home'
 
-  #OAuth Routes
+  # OAuth Routes
   get '/auth/google_oauth2', as: 'google_login'
   get '/auth/:google_oauth2/callback', to: 'sessions#create'
   get '/auth/failure', to: redirect('/')
   get '/signout', to: 'sessions#destroy', as: 'signout'
 
-  # chat routes
+  # Chat routes
   # mount ActionCable.server => '/cable'
 
   resources :users do
@@ -43,23 +43,22 @@ Rails.application.routes.draw do
   get 'users/:id/student', to: 'users#show_student', as: 'user_student'
   get 'users/:id/donor', to: 'users#show_donor', as: 'user_donor'
 
-  resources :items
-
   resources :items do
+    collection do
+      get 'home'  # Add this line to route to the home action
+    end
+
+    member do
+      patch :image_upload
+    end
+
     resource :chatroom do
       resources :messages, only: [:create, :destroy]
     end
   end
 
-  resources :items do
-    member do
-      patch :image_upload
-    end
-  end
-
   patch 'time_slots/:id/mark_unavailable', to: 'time_slots#mark_unavailable', as: 'mark_unavailable_time_slot'
-  patch "/items/:id/mark_unavailable", to: "items#mark_unavailable", as: 'mark_unavailable_item'
+  patch '/items/:id/mark_unavailable', to: 'items#mark_unavailable', as: 'mark_unavailable_item'
   get 'items/by_type/:type', to: 'items#by_type', as: :items_by_type
-  resources :items, except: :show # Exclude the show action from the resources
-
 end
+
