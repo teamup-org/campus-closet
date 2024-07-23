@@ -29,6 +29,12 @@
           <li class="nav-item">
             <%= link_to "Home", "/", class: 'nav-link', style: 'transition: background-color 0.3s;' %>
           </li>
+          <li class="nav-item">
+            <%= link_to "Welcome", "/welcome", class: 'nav-link', style: 'transition: background-color 0.3s;' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Carousel", "/carousel", class: 'nav-link', style: 'transition: background-color 0.3s;' %>
+          </li>
           <% if current_user.present? %>
             <% if current_user.student.present? %>
               <li class="nav-item">
