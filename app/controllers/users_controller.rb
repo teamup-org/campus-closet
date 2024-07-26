@@ -48,7 +48,14 @@ class UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
-    destroy_and_respond(@user, :users_url, User.model_name)
+    begin
+      destroy_and_respond(@user, :users_url, User.model_name)
+    rescue ActiveRecord::InvalidForeignKey
+      respond_to do |format|
+        format.html { redirect_to users_url, alert: "Cannot delete user because dependent records exist." }
+        format.json { render json: { error: "Cannot delete user because dependent records exist." }, status: :unprocessable_entity }
+      end
+    end
   end
 
   def account_creation

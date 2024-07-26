@@ -1,38 +1,38 @@
-<!-- app/views/users/account_creation.html.erb -->
-
-<h1>Account Creation</h1>
 
 <%= form_for @user, url: update_user_user_path(@user), method: :patch do |f| %>
-  <div>
-     <p>
-        First Name: 
-        <% if @user.first == @user.email %> 
-          <%= f.text_field :first, value: (@user.first == @user.email ? "" : @user.first) %>
-        <% else %>
-          <%= @user.first %>
-        <% end %>
-        <br>
+  <div class="first-name-container" >
+    <p class="first-name-label">First Name:</p>
+    <% if @user.first == @user.email %> 
+      <%= f.text_field :first, value: (@user.first == @user.email ? "" : @user.first), class: 'first-name-input', placeholder: 'Enter your first name' %>
+    <% else %>
+      <p class="first-name-value"><%= @user.first %> </p>
+    <% end %>
+  </div>
 
-        Last Name:
-        <% if @user.first == @user.email %>
-          <%= f.text_field :last %>
-        <% else %>
-          <%= @user.last %> 
-        <% end %>
-        <br>
-
-        Email: <%= @user.email %><br>
-     </p>
+  <div class="last-name-container">
+    <p class="last-name-label">Last Name:</p>
+    <% if @user.first == @user.email %>
+      <%= f.text_field :last, class: 'last-name-input', placeholder: 'Enter your last name' %>
+    <% else %>
+      <p class="last-name-value"><%= @user.last %></p>
+    <% end %>
   </div>
 
   <div>
-    <%= f.label :phone %>
-    <%= f.text_field :phone %>
+    <p class="email-label">Email: <%= @user.email %></p>
+    <% if @user.email == "" %>
+      <%= f.text_field :email, class: 'email-input' %>
+    <% end %>
   </div>
 
   <div>
-    <%= f.label :address %>
-    <%= f.text_field :address %>
+    <p class="phone-label"><%= f.label :phone %></p>
+    <%= f.text_field :phone, class: 'phone-input', placeholder: 'Enter your phone number' %>
+  </div>
+
+  <div>
+    <p class="address-label"><%= f.label :address %></p>
+    <%= f.text_field :address, class: 'address-input', placeholder: 'Enter your address' %>
     <% if @user.errors[:address].any? %>
       <div style="color: red;">
         <%= @user.errors[:address].first %>
@@ -41,13 +41,14 @@
   </div>
 
   <% if @user.email.include?('tamu.edu') %>
-    <div>
-      <%= f.label :donor %>
-      <%= f.check_box :donor %>
+    <div class="donor-checkbox-container">
+      <p class="donor-checkbox-label"><%= f.label :donor %></p>
+      <%= f.check_box :donor, class: 'donor-checkbox-input' %>
     </div>
   <% end %>
 
-  <div>
-    <%= f.submit 'Save' %>
+
+  <div class="sign-up-container">
+    <%= f.submit 'Sign Up', class: 'sign-up-button' %>
   </div>
 <% end %>
