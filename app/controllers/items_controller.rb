@@ -27,10 +27,7 @@ class ItemsController < ApplicationController
   end
 
   def pickup_request
-    #DonorMailer.with(user: current_user).confirm_time_to_donor_email.deliver_later
     @time_slots = @item.user.time_slots
-    # Tell the UserMailer to send a welcome email after save
-
   end
 
   # GET /items/new
@@ -84,6 +81,7 @@ class ItemsController < ApplicationController
 
   def by_type
     @type = Type.find_by(name: params[:type])
+    
     @items = Item.where(type_id: @type.id)
 
     @sizes = Size.where(type_id: @type.id)
