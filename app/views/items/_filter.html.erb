@@ -1,6 +1,22 @@
-<%= form_tag(items_path, method: :get) do %>
-  <%= select_tag :color, options_from_collection_for_select(@colors, :id, :name, params[:color]), prompt: 'Select Color' %>
-  <%= select_tag :gender, options_from_collection_for_select(@genders, :id, :name, params[:gender]), prompt: 'Select Gender' %>
-  <%= select_tag :condition, options_from_collection_for_select(@conditions, :id, :name, params[:condition]), prompt: 'Select Condition' %>
-  <%= submit_tag "Filter", class: "btn btn-primary" %>
-<% end %>
+<div class="filter-box">
+  <h2>Filters</h2>
+  <%= form_tag(items_path, method: :get) do %>
+    <div class="filter-group">
+      <label for="type">Type</label>
+      <%= select_tag :type, options_from_collection_for_select(@types, :id, :name, params[:type]), prompt: 'All' %>
+    </div>
+    <div class="filter-group">
+      <label for="color">Color</label>
+      <%= select_tag :color, options_from_collection_for_select(@colors, :id, :name, params[:color]), prompt: 'All' %>
+    </div>
+    <div class="filter-group">
+      <label for="gender">Gender</label>
+      <%= select_tag :gender, options_from_collection_for_select(@genders, :id, :name, params[:gender]), prompt: 'All' %>
+    </div>
+    <div class="filter-group">
+      <label for="condition">Condition</label>
+      <%= select_tag :condition, options_from_collection_for_select(@conditions, :id, :name, params[:condition]), prompt: 'All' %>
+    </div>
+    <%= submit_tag "Filter", class: "btn btn-primary" %>
+  <% end %>
+</div>

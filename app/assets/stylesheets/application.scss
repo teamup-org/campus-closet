@@ -38,6 +38,94 @@
     margin-bottom: 0;
   }
 
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .row {
+    display: flex;
+    width: 100%;
+  }
+  
+  .col-md-3 {
+    flex: 0 0 25%;
+  }
+  
+  .col-md-9 {
+    flex: 0 0 75%;
+  }
+  
+
+  .filter-box {
+    width: 250px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+  }
+  
+  .filter-box h2 {
+    margin-top: 0;
+    font-size: 1.5em;
+  }
+  
+  .filter-group {
+    margin-bottom: 15px;
+  }
+  
+  .filter-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .filter-group select {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .btn-primary {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination .page {
+    margin: 0 5px;
+  }
+  
+  .pagination .page a {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    color: #007bff;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .pagination .page a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  
+
  
 
  

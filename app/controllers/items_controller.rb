@@ -11,7 +11,8 @@ class ItemsController < ApplicationController
 
   # GET /items or /items.json
   def index
-    @items = Item.all
+    @items = Item.page(params[:page]).per(9)
+    @types = Type.all
     @sizes = Size.all
     @featured_items = Item.limit(15)
 
@@ -19,7 +20,7 @@ class ItemsController < ApplicationController
 
 
     filter_items(params[:size], params[:color], params[:condition],
-                 params[:gender])
+                 params[:gender], params[:type])
   end
 
   def home
@@ -123,11 +124,12 @@ class ItemsController < ApplicationController
     @item.image_url = obj.public_url
   end
 
-  def filter_items(size_id, color_id, condition_id, gender_id)
+  def filter_items(size_id, color_id, condition_id, gender_id, type_id)
     @items = @items.where(size_id:) if size_id.present?
     @items = @items.where(color_id:) if color_id.present?
     @items = @items.where(condition_id:) if condition_id.present?
     @items = @items.where(gender_id:) if gender_id.present?
+    @items = @items.where(type_id:) if type_id.present?
   end
 
   def any_filters_present?

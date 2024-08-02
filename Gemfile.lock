@@ -195,6 +195,18 @@ GEM
     jmespath (1.6.2)
     json (2.7.1)
     jwt (2.7.1)
+    kaminari (1.2.2)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.2.2)
+      kaminari-activerecord (= 1.2.2)
+      kaminari-core (= 1.2.2)
+    kaminari-actionview (1.2.2)
+      actionview
+      kaminari-core (= 1.2.2)
+    kaminari-activerecord (1.2.2)
+      activerecord
+      kaminari-core (= 1.2.2)
+    kaminari-core (1.2.2)
     kredis (1.7.0)
       activemodel (>= 6.0.0)
       activesupport (>= 6.0.0)
@@ -455,6 +467,7 @@ DEPENDENCIES
   geocoder
   importmap-rails
   jbuilder
+  kaminari
   kredis
   mapkick-rb
   omniauth
