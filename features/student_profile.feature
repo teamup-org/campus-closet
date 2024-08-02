@@ -15,12 +15,12 @@ Scenario: Logged in student visits profile page
     When I click on "Student Profile"
     Then I should see "Requests"
     And I should see "Pickups"
-    And I should see my account details
+    And I should see my contact info
 
 Scenario: Student editing address
     Given I am a logged in student
     And I am on the Profile Page
-    When I click on "Edit Account"
+    When I click on "Edit Profile"
     And I fill in the "Address" field with "College Station, TX"
     And I click on "Confirm User Updates"
     Then I should see "College Station, TX" as my "Address"
@@ -28,7 +28,7 @@ Scenario: Student editing address
 Scenario: Student editing phone
     Given I am a logged in student
     And I am on the Profile Page
-    When I click on "Edit Account"
+    When I click on "Edit Profile"
     And I fill in the "Phone" field with "1234567890"
     And I click on "Confirm User Updates"
     Then I should see "1234567890" as my "Phone"

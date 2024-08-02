@@ -43,5 +43,5 @@ Scenario: Fill in Account Creation
     And I am on the account creation page, "teststudent2@tamu.edu"
     When I enter "1234567890" in "Phone" 
     And I enter "College Station, TX" in "Address"
-    And I click on "Save"
+    And I click on "Sign Up"
     Then I should be put on the homepage

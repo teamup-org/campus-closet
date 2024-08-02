@@ -21,6 +21,9 @@ Given('I am a logged in donor') do
   })
   visit('/')
   click_on 'Login'
+
+  @current_user = donor_user
+
 end
 
 Given('I am on the Dashboard') do

@@ -29,8 +29,8 @@ Then('I should see {string}') do |listing|
   expect(page).to have_content(listing)
 end
 
-Then('I should see my account details') do
-  expect(page).to have_content('Account Details')
+Then('I should see my contact info') do
+  expect(page).to have_content('Contact Info')
 end
 
 Given('I am on the Profile Page') do

@@ -10,7 +10,7 @@ Scenario: Fill in Account Creation w/ Donor Field
     When I enter "1234567890" in "Phone" 
     And I enter "College Station, TX" in "Address"
     And I click on "Donor" checkbox
-    And I click on "Save"
+    And I click on "Sign Up"
     Then I should be put on the homepage
     And I should see "Donor Dashboard" on the navbar
 
@@ -27,7 +27,7 @@ Scenario: Student updates account to be donor
     Given I am a logged in student
     And I do not see "Donor Dashboard" on the navbar
     When I click on "Student Profile"
-    And I click on "Edit Account"
+    And I click on "Edit Profile"
     And I click on "Donor" checkbox
     And I click on "Confirm User Updates"
     Then I should see "Donor Dashboard" on the navbar
