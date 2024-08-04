@@ -25,6 +25,10 @@
       display: none;
     }
 
+    .mySlides.active {
+      display: block;
+    }
+
     .slide-image {
       width: 100%;
       height: auto;
@@ -83,7 +87,6 @@
       background-color: #717171;
     }
 
-    /* Responsive styles */
     @media screen and (max-width: 600px) {
       .slide-image {
         max-height: 300px;
@@ -109,7 +112,7 @@
 </div>
 
 <div class="slideshow-container">
-  <div class="mySlides">
+  <div class="mySlides active">
     <%= image_tag 'slide1.jpg', class: 'slide-image' %>
   </div>
   <div class="mySlides">
@@ -125,14 +128,12 @@
     <%= image_tag 'slide5.jpg', class: 'slide-image' %>
   </div>
 
-  <!-- Next and previous buttons -->
   <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
   <a class="next" onclick="plusSlides(1)">&#10095;</a>
 </div>
 
-<!-- The dots/circles -->
 <div class="dot-container">
-  <span class="dot" onclick="currentSlide(1)"></span>
+  <span class="dot active" onclick="currentSlide(1)"></span>
   <span class="dot" onclick="currentSlide(2)"></span>
   <span class="dot" onclick="currentSlide(3)"></span>
   <span class="dot" onclick="currentSlide(4)"></span>
@@ -140,7 +141,7 @@
 </div>
 
 <script>
-  let slideIndex = 1; // Start with the first slide
+  let slideIndex = 1;
   let slideInterval;
 
   function showSlides(n) {
@@ -163,7 +164,7 @@
     slideInterval = setInterval(function() {
       slideIndex++;
       showSlides(slideIndex);
-    }, 6000); // Change image every 6 seconds
+    }, 6000);
   }
 
   function plusSlides(n) {
@@ -178,9 +179,9 @@
     startSlideShow();
   }
 
-  // Show the first slide immediately and start the slideshow
   document.addEventListener('DOMContentLoaded', function() {
-    currentSlide(1); // Simulate a click on the first dot
+    slideIndex = 1;
+    startSlideShow();
   });
 </script>
 
