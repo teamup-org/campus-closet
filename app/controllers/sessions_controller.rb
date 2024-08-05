@@ -1,7 +1,8 @@
-# frozen_string_literal: true
-
-# controller for the sessions
 class SessionsController < ApplicationController
+  def new
+    # This action renders the login form
+  end
+  
   def create
     auth = request.env['omniauth.auth']
     user = User.from_omniauth(auth)
@@ -29,9 +30,4 @@ class SessionsController < ApplicationController
 
     redirect_to "https://#{auth0_domain}/v2/logout?client_id=#{client_id}&returnTo=#{return_to}", allow_other_host: true
   end
-
-  # def destroy
-  #   session.delete(:user_id)
-  #   redirect_to root_path
-  # end
 end

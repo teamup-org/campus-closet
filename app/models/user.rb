@@ -16,20 +16,24 @@ class User < ApplicationRecord
   # for chat feature
   has_many :messages, dependent: :destroy
 
+  has_secure_password
+
+  validates :name, presence: true
+  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :password, presence: true, length: { minimum: 6 }, unless: -> { password.blank? }
+  validates :password_confirmation, presence: true, if: -> { password.present? }
+
   def self.from_omniauth(auth)
-    user = where(email: auth.info.email).first_or_initialize
-    names = auth['info']['name'].split
+    return nil if auth.nil?
 
-    # Update the user's attributes
-    user.update(
-      email: auth.info.email,
-      first: names[0],
-      last: names[1..].join(' ')
-    )
+    user = where(email: auth.info.email).first_or_initialize do |u|
+      names = auth['info']['name'].split
+      u.first = names[0]
+      u.last = names[1..].join(' ')
+      u.password = SecureRandom.hex(10)
+    end
 
-    # Save the user
     user.save
-
     user
   end
 end
