@@ -23,7 +23,7 @@
   </div>
 </div>
 
-<div id="form-container" class="form-container">
+<div id="form-container-p" class="form-container-pickup">
   <h3>Message (Max 200 characters)</h3>
   <textarea id="message" maxlength="200" rows="4"></textarea>
   <p>Remaining characters: <span id="remaining-characters">200</span></p>
@@ -49,7 +49,7 @@
 
 <script>
   function initializePage() {
-    const formContainer = document.getElementById('form-container');
+    const formContainer = document.getElementById('form-container-p');
     const calendarContainer = document.getElementById('calendar-container');
 
     function adjustFormWidth() {
