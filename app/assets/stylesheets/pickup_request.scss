@@ -115,7 +115,7 @@ body {
 }
 
 /* Form Container */
-.form-container {
+.form-container-pickup {
   margin-top: 30px;
   position: absolute;
   top: 60px;
@@ -127,14 +127,14 @@ body {
   background-color: #FFFFFF;
 }
 
-.form-container h3 {
+.form-container-pickup h3 {
   font-weight: 400;
   font-size: 15px;
   line-height: 21px;
   color: #000000;
 }
 
-.form-container textarea {
+.form-container-pickup textarea {
   width: 100%;
   padding: 10px;
   border: 2px solid #000000;
@@ -142,7 +142,7 @@ body {
   margin-bottom: 10px;
 }
 
-.form-container button {
+.form-container-pickup button {
   padding: 10px 20px;
   border: 2px solid #000000;
   background: #E1E1E1;

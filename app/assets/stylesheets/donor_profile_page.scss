@@ -91,3 +91,22 @@
 .chat-btn-container .btn {
   margin-bottom: 10px;
 }
+
+
+.add-new-item-btn {
+  width: 150px; /* Set a fixed width */
+
+  background-color: #3f42ff; 
+  color: white; 
+  font-size: 16px; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+.add-new-item-btn:hover {
+  background-color: #041d71; 
+}
+

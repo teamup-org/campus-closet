@@ -61,6 +61,19 @@
           <li class="nav-item">
             <%= link_to "Contact", contact_path, class: 'nav-link' %>
           </li>
+          <% if current_user.present? %>
+            <% if current_user.student.present? %>
+              <li class="nav-item">
+                <%= link_to "Student Profile", user_student_path(current_user), class: 'nav-link' %>
+              </li>
+            <% end %>
+        
+            <% if current_user.donor.present? %>
+              <li class="nav-item">
+                <%= link_to "Donor Dashboard", user_donor_path(current_user), class: 'nav-link' %>
+              </li>
+            <% end %>
+          <% end %>
         </ul>
         <div class="navbar-text">
           <% if current_user.present? %>
