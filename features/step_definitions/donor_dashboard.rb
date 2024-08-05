@@ -1,14 +1,29 @@
 # frozen_string_literal: true
 
 Given('I am a logged in donor') do
-  User.create(first: 'Test', last: 'Donor', email: 'testdonor@gmail.com', student: false, donor: true)
-  visit('/')
+  donor_user=User.create!(first: 'Test', last: 'Donor', email: 'testdonor@gmail.com', student: false, donor: true)
+  
   OmniAuth.config.test_mode = true
-  OmniAuth.config.add_mock(
-    :google_oauth2,
-    info: { email: 'testdonor@gmail.com' }
-  )
-  click_on 'Login with Google'
+  OmniAuth.config.mock_auth[:auth0] = OmniAuth::AuthHash.new({
+    provider: 'auth0',
+    uid: '545',
+    info: {
+      email: 'testdonor@gmail.com',
+      first_name: 'Test',
+      last_name: 'Donor',
+      name: 'Test Donor'
+    },
+    extra: {
+      raw_info: {
+        donor: true
+      }
+    }
+  })
+  visit('/')
+  click_on 'Login'
+
+  @current_user = donor_user
+
 end
 
 Given('I am on the Dashboard') do

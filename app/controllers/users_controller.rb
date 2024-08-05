@@ -27,10 +27,20 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  # GET /users/1/edit
+  #GET /users/1/edit
   def edit
+    @user = User.find(params[:id])
+    unless current_user && (current_user == @user || current_user.admin?)
+      redirect_to root_path
+      flash[:alert] = "You don't have permission to view this profile."
+      return
+    end
     session[:return_to] ||= request.referer
   end
+  
+  # def edit
+  #   session[:return_to] ||= request.referer
+  # end
 
   # POST /users or /users.json
   def create
@@ -39,33 +49,50 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    return unless @user.update(user_params)
-
-    redirect_to @user, notice: 'Profile updated successfully.'
-    # else
-    #   render :edit
+    if @user.update(user_params)
+      redirect_to @user, notice: 'Profile updated successfully.'
+    else
+      render :edit
+    end
   end
+
+  # def update
+  #   return unless @user.update(user_params)
+
+  #   redirect_to @user, notice: 'Profile updated successfully.'
+  #   else
+  #     render :edit
+  # end
 
   # DELETE /users/1 or /users/1.json
   def destroy
-    destroy_and_respond(@user, :users_url, User.model_name)
+    begin
+      destroy_and_respond(@user, :users_url, User.model_name)
+    rescue ActiveRecord::InvalidForeignKey
+      respond_to do |format|
+        format.html { redirect_to users_url, alert: "Cannot delete user because dependent records exist." }
+        format.json { render json: { error: "Cannot delete user because dependent records exist." }, status: :unprocessable_entity }
+      end
+    end
   end
 
   def account_creation
     @user = User.find(params[:id])
+
     return if @user.email.include?('tamu.edu')
 
     @user.update(donor: true)
   end
 
   def update_user
-    return unless @user.update(user_params)
-
-    @user.update(student: @user.email.include?('tamu.edu'))
-    redirect_to root_path, notice: 'Account created successfully.'
-    # else
-    # render :edit
+    if @user.update(user_params)
+      @user.update(student: @user.email.include?('tamu.edu'))
+      redirect_to root_path, notice: "Account created successfully. Welcome to Campus Closet, #{@user.first}!"
+    else
+      render :edit
+    end
   end
+
 
   def show_student
     @user = User.find(params[:id])

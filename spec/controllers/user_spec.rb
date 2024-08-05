@@ -3,8 +3,73 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, user: :controller do
+  let(:user) { User.create(first: 'Example User', email: 'example@tamu.edu') }
+  let(:non_tamu_user) { User.create(first: 'Non TAMU User', email: 'non_tamu@example.com') }
+
   before do
     allow(controller).to receive(:require_admin)
+    allow(controller).to receive(:require_login)
+  end
+
+  describe 'GET #account_creation' do
+    context 'when user has a tamu.edu email' do
+      it 'does not update donor status' do
+        get :account_creation, params: { id: user.id }
+        user.reload
+        expect(user.donor).to be_falsey
+      end
+    end
+
+    context 'when user does not have a tamu.edu email' do
+      it 'updates donor status to true' do
+        get :account_creation, params: { id: non_tamu_user.id }
+        non_tamu_user.reload
+        expect(non_tamu_user.donor).to be_truthy
+      end
+    end
+  end
+
+  describe 'PATCH #update_user' do
+    context 'with valid params' do
+      it 'updates the user and redirects to root_path' do
+        patch :update_user, params: { id: user.id, user: { first: 'Updated Name' } }
+        user.reload
+        expect(user.first).to eq('Updated Name')
+        expect(response).to redirect_to(root_path)
+        expect(flash[:notice]).to eq("Account created successfully. Welcome to Campus Closet, #{user.first}!")
+      end
+
+      it 'updates the student status based on email' do
+        patch :update_user, params: { id: user.id, user: { email: 'updated@tamu.edu' } }
+        user.reload
+        expect(user.student).to be_truthy
+      end
+    end
+
+    context 'with invalid params' do
+      it 'does not update the user and re-renders the edit template' do
+        user = User.create(first: 'Test User', email: 'testuser@tamu.edu')
+        allow_any_instance_of(User).to receive(:update).and_return(false) # Simulate failure
+  
+        patch :update_user, params: { id: user.id, user: { first: '' } }
+  
+        expect(response).to render_template(:edit)
+      end
+    end
+  end
+
+  describe 'GET #show_student' do
+    it 'renders the show_student template' do
+      get :show_student, params: { id: user.id }
+      expect(response).to render_template('show_student')
+    end
+  end
+
+  describe 'GET #show_donor' do
+    it 'renders the show_donor template' do
+      get :show_donor, params: { id: user.id }
+      expect(response).to render_template('show_donor')
+    end
   end
 
   describe 'GET #index' do
@@ -50,12 +115,14 @@ RSpec.describe UsersController, user: :controller do
     it 'returns a success response for logged-in user' do
       OmniAuth.config.test_mode = true
       OmniAuth.config.add_mock(
-        :google_oauth2,
+        :auth0,
+        uid: 'auth0|123456789',
+        provider: 'auth0',
         info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
       )
 
       # Log in the user by creating a session
-      user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+      user = User.from_omniauth(OmniAuth.config.mock_auth[:auth0])
       session[:user_id] = user.id
 
       get :edit, params: { id: user.id }
@@ -65,6 +132,8 @@ RSpec.describe UsersController, user: :controller do
 
     it 'redirects to root_path for unauthorized user' do
       user = User.create(first: 'Example User')
+      allow(controller).to receive(:current_user).and_return(nil) # Simulate no logged-in user
+
       get :edit, params: { id: user.to_param }
       expect(response).to redirect_to(root_path)
       expect(flash[:alert]).to eq("You don't have permission to view this profile.")
@@ -93,6 +162,28 @@ RSpec.describe UsersController, user: :controller do
     end
   end
 
+  describe 'PATCH #update' do
+    context 'with valid params' do
+      it 'updates the user and redirects to user' do
+        patch :update, params: { id: user.id, user: { first: 'Updated Name' } }
+        user.reload
+        expect(user.first).to eq('Updated Name')
+        expect(response).to redirect_to(user)
+        expect(flash[:notice]).to eq('Profile updated successfully.')
+      end
+    end
+
+    context 'with invalid params' do
+      it 'does not update the user and re-renders the edit template' do
+        allow_any_instance_of(User).to receive(:update).and_return(false) # Simulate failure
+
+        patch :update, params: { id: user.id, user: { first: '' } }
+
+        expect(response).to render_template(:edit)
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
     it 'destroys the requested user' do
       user = User.create(first: 'Example User')
@@ -105,6 +196,20 @@ RSpec.describe UsersController, user: :controller do
       user = User.create(first: 'Example User')
       delete :destroy, params: { id: user.to_param }
       expect(response).to redirect_to(users_url)
+    end
+
+    it 'does not destroy the user and redirects with an alert if there are dependent records' do
+      user = User.create(first: 'Example User')
+      
+      # Simulate dependent records by raising an ActiveRecord::InvalidForeignKey error
+      allow_any_instance_of(User).to receive(:destroy).and_raise(ActiveRecord::InvalidForeignKey)
+  
+      expect do
+        delete :destroy, params: { id: user.to_param }
+      end.to_not change(User, :count)
+  
+      expect(response).to redirect_to(users_url)
+      expect(flash[:alert]).to eq("Cannot delete user because dependent records exist.")
     end
   end
 

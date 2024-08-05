@@ -2,48 +2,32 @@ class SessionsController < ApplicationController
   def new
     # This action renders the login form
   end
-
+  
   def create
-    if params[:email].blank? || params[:password].blank?
-      flash[:alert] = "Email and password cannot be blank."
-      redirect_to login_path
-      return
-    end
+    auth = request.env['omniauth.auth']
+    user = User.from_omniauth(auth)
 
-    if request.env['omniauth.auth']
-      auth = request.env['omniauth.auth']
-      user = User.from_omniauth(auth)
+    # Check if the user is a new record (i.e., a new user)
+    if user.student.nil?
+      session[:user_id] = user.id
+      redirect_to account_creation_user_url(user)
     else
-      user = User.find_by(email: params[:email])
-      if user && user.authenticate(params[:password])
-        session[:user_id] = user.id
-        redirect_to root_path, notice: 'Logged in successfully'
-        return
-      else
-        flash[:alert] = "Invalid email or password."
-        redirect_to login_path
-        return
-      end
-    end
-
-    if user.nil?
-      flash[:alert] = "Invalid email or password."
-      redirect_to login_path
-    else
-      # Check if the user is a new record (i.e., a new user)
-      if user.student.nil?
-        session[:user_id] = user.id
-        redirect_to account_creation_user_url(user)
-      else
-        user.save if user.changed?
-        session[:user_id] = user.id
-        redirect_to root_path
-      end
+      user.save if user.changed?
+      session[:user_id] = user.id
+      redirect_to root_path, notice: "Welcome back, #{user.first}!"
     end
   end
 
   def destroy
-    session.delete(:user_id)
-    redirect_to root_path
+    # Clear the session
+    reset_session
+    
+    # Have user go through authentication 
+    # Redirect to Auth0 logout 
+    auth0_domain = ENV['AUTH0_DOMAIN']
+    client_id = ENV['AUTH0_CLIENT_ID']
+    return_to = root_url
+
+    redirect_to "https://#{auth0_domain}/v2/logout?client_id=#{client_id}&returnTo=#{return_to}", allow_other_host: true
   end
 end

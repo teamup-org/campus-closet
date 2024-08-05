@@ -1,24 +1,43 @@
 <p style="color: green"><%= notice %></p>
 
-<% if current_user && current_user.id == @user.id %>
-<%= link_to "Add New Item", new_item_path, class: "btn btn-primary" %>
 
 
-  <div style="float: right; margin-right: 20px;">
-    <div><strong>Account Details</strong><br></div>
+<div class="header-account-container">
+  <div class="account-details-container profile">
+    <div><strong>Contact Info</strong><br></div>
     <%= render @user %>
     <% if @user.received_reviews.exists? %>
         <p><strong>Average Rating:</strong> <%= @user.received_reviews.average(:rating) %></p>
     <% else %>
         <p>No reviews yet.</p>
     <% end %>
-    <div>
-      <%= link_to "Edit Account", edit_user_path(@user), class: "btn btn-outline-primary" %>
-      <%= button_to "Delete Account", @user, method: :delete, class: "btn btn-danger btn-sm" %>
-    </div>
-    <br>
-    
+  </div>
 
+  <div class="header-container">
+    <h1 class="center-header"><%= @user.first %> <%= @user.last %></h1>
+      <% if current_user && current_user.id == @user.id %>
+
+    <%= link_to "Edit Profile", edit_user_path(@user), class: "btn btn-outline-primary edit-profile" %>
+    <%= button_to "Logout", signout_path, method: :get, data: { turbo: false }, class: "btn btn-primary btn-sm logout" %>
+    <%= button_to "Delete Account", @user, method: :delete, class: "btn btn-danger btn-sm delete-account" %>
+      <% end %>
+  </div>
+
+  <div class="time-slots-container">
+      <% if current_user && current_user.id == @user.id %>
+
+    <%= link_to "New Time Slot", new_time_slot_path, class: "btn btn-outline-primary new-time-slot" %>
+    <%= link_to "View Time Slots", time_slots_path, class: "btn btn-outline-primary view-time-slot" %>
+    <% end %>
+  </div>
+  </div>
+</div>
+
+<% if current_user && current_user.id == @user.id %>
+<%= link_to "Add New Item", new_item_path, class: "btn btn-primary" %>
+
+
+  <div style="float: right; margin-right: 250px;">
     <% if @user.time_slots.exists? %>
     <strong>Available Time Slots</strong>:
     <div class="text-center">
@@ -38,10 +57,6 @@
       <% end %>
     </div>
     <% end %>
-    <div>
-      <%= link_to "New time slot", new_time_slot_path, class: "btn btn-outline-primary" %>
-      <%= link_to "View Time Slots", time_slots_path, class: "btn btn-outline-primary" %>
-    </div>
   </div>
 <% else %>
   <h2>Reviews:</h2>
@@ -54,111 +69,129 @@
   </div>
 <% end %>
 
-<h2>Uploaded Items:</h2>
-<div class="row">
-  <% @user.items.each do |item| %>
-    <% if item.status.name == "Available" %>
-      <div class="col-md-3 mb-3">
-        <div class="card">
-          <div class="card-body">
-            <%= render partial: 'items/item', locals: { item: item } %>
-            <%= link_to "Show this item", item, class: "btn btn-primary" %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
-</div>
 
-<% if current_user && current_user.id == @user.id %>
-  <h2>Past Pickups:</h2>
-  <div class="row">
-    <% if @user.donated_pickups.count == 0%>
-      <h3>No Past Pickups</h3>
-    <% end %>
-    <% @user.donated_pickups.each do |pickup| %>
-      <div class="col-md-3 mb-3">
-        <div class="card">
-          <% if pickup.item.image_url.present? %>
-            <%= image_tag pickup.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: scale-down; height: 250px;" %>
-          <% else %>
-            <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 250px;">
-          <% end %>
-          <div class="card-body">
-            <p>
-              <strong>Receiver</strong>: <%= pickup.receiver.first %> <%= pickup.receiver.last %> 
-              <br>
-              <strong>Item Description</strong>: <%= pickup.item.description %>
-            </p>
+
+<div class="content-container">
+
+  <div class="section">
+    <h2>Uploaded Items:</h2>
+    <div class="row">
+      <% @user.items.each do |item| %>
+        <% if item.status.name == "Available" %>
+          <div class="col-md-3 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <%= render partial: 'items/item', locals: { item: item } %>
+                <%= link_to "Show this item", item, class: "btn btn-primary" %>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    <% end %>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 
-  <h2>Current Requests:</h2>
-  <div class="row">
-    <% if @user.donated_requests.count == 0%>
-      <h3>No Current Requests</h3>
-    <% end %>
-    <% @user.donated_requests.each do |request| %>
-      <div class="col-md-3 mb-3">
-        <div class="card">
-          <% if request.item.image_url.present? %>
-            <%= image_tag request.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: scale-down; height: 250px;" %>
-          <% else %>
-            <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 250px;">
-          <% end %>
-          <div class="card-body">
-            <p>
-              <strong>Receiver</strong>: <%= request.receiver.first %> <%= request.receiver.last %> 
-              <br>
-              <strong>Item Description</strong>: <%= request.item.description %>
-            </p>
-            <strong>Time Slot:</strong>
-            <div class="day">
-              <div style="font-size: 18px; color: #2c3e50; font-weight: bold;">
-                <%= request.time_slot.start_time.strftime('%B %d, %Y') %>
-              </div>
-              <div class="time-slot" style="padding: 10px; margin: 10px 0; font-family: 'Arial', sans-serif; font-size: 16px; color: #2c3e50;">
+  <div class="section">
+    <% if current_user && current_user.id == @user.id %>
+      <h2>Past Pickups:</h2>
+      <div class="row">
+        <% if @user.donated_pickups.count == 0%>
+          <h3>No Past Pickups</h3>
+        <% end %>
+        <% @user.donated_pickups.each do |pickup| %>
+          <div class="col-md-3 mb-3">
+            <div class="card">
+              <% if pickup.item.image_url.present? %>
+                <%= image_tag pickup.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: scale-down; height: 250px;" %>
+              <% else %>
+                <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 250px;">
+              <% end %>
+              <div class="card-body">
                 <p>
-                  <%= "Start: #{request.time_slot.start_time.strftime('%I:%M %p')}"%> 
+                  <strong>Receiver</strong>: <%= pickup.receiver.first %> <%= pickup.receiver.last %> 
                   <br>
-                  <%= "End: #{request.time_slot.end_time.strftime('%I:%M %p')}" %>
+                  <strong>Item Description</strong>: <%= pickup.item.description %>
                 </p>
               </div>
             </div>
           </div>
-          <div class ="chat-btn-container">
-            <%= link_to "Chat", item_chatroom_path(request.item), class: "btn btn-primary btn-lg"%>
-            <p></p>
-          </div>
-          <div class="btn btn-primary btn-lg">
-            <%= button_tag "Confirm your item has been delivered", class: "confirm_pickup_button", data: {donor_id: request.donor_id, receiver_id: request.receiver_id, item_id: request.item.id, request_id: request.id}%>
-          </div>
-          <% if request.receiver && request.receiver.latitude %>
-            <div class="btn btn-primary btn-lg">
-              <%= button_tag "Show Map", class: "show-map-button", onclick: "showMap('map-container-#{request.id}')" %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="section">
+
+      <h2>Current Requests:</h2>
+      <div class="row">
+        <% if @user.donated_requests.count == 0%>
+          <h3>No Current Requests</h3>
+        <% end %>
+        <% @user.donated_requests.each do |request| %>
+          <div class="col-md-3 mb-3">
+            <div class="card">
+              <% if request.item.image_url.present? %>
+                <%= image_tag request.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: scale-down; height: 250px;" %>
+              <% else %>
+                <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 250px;">
+              <% end %>
+              <div class="card-body">
+                <p>
+                  <strong>Receiver</strong>: <%= request.receiver.first %> <%= request.receiver.last %> 
+                  <br>
+                  <strong>Item Description</strong>: <%= request.item.description %>
+                </p>
+                <strong>Time Slot:</strong>
+                <div class="day">
+                  <div style="font-size: 18px; color: #2c3e50; font-weight: bold;">
+                    <%= request.time_slot.start_time.strftime('%B %d, %Y') %>
+                  </div>
+                  <div class="time-slot" style="padding: 10px; margin: 10px 0; font-family: 'Arial', sans-serif; font-size: 16px; color: #2c3e50;">
+                    <p>
+                      <%= "Start: #{request.time_slot.start_time.strftime('%I:%M %p')}"%> 
+                      <br>
+                      <%= "End: #{request.time_slot.end_time.strftime('%I:%M %p')}" %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class ="chat-btn-container">
+                <%= link_to "Chat", item_chatroom_path(request.item), class: "btn btn-primary btn-lg"%>
+                <p></p>
+              </div>
+              <div class="btn btn-primary btn-lg">
+                <%= button_tag "Confirm your item has been delivered", class: "confirm_pickup_button", data: {donor_id: request.donor_id, receiver_id: request.receiver_id, item_id: request.item.id, request_id: request.id}%>
+              </div>
+              <% if request.receiver && request.receiver.latitude %>
+                <div class="btn btn-primary btn-lg">
+                  <%= button_tag "Show Map", class: "show-map-button", onclick: "showMap('map-container-#{request.id}')" %>
+                </div>
+                <div id="map-container-<%= request.id %>" class="map_container">
+                  <%= js_map [{latitude: request.receiver.latitude, longitude: request.receiver.longitude}], height: "300px", controls: true %>
+                </div>
+              <% else %>
+                <p>Receiver location not available.</p>
+              <% end %>
             </div>
-            <div id="map-container-<%= request.id %>" class="map_container">
-              <%= js_map [{latitude: request.receiver.latitude, longitude: request.receiver.longitude}], height: "300px", controls: true %>
-            </div>
-          <% else %>
-            <p>Receiver location not available.</p>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
     <% end %>
   </div>
-<% end %>
+</div>
 
+<!--
+<div class="bottom-container">
+  <%= button_to "Logout", signout_path, method: :get, data: { turbo: false }, class: "btn btn-primary btn-sm logout" %>
+  <%= button_to "Delete Account", @user, method: :delete, class: "btn btn-danger btn-sm delete-account" %>
+</div> 
+-->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const timeSlotButtons = document.querySelectorAll('.time-slot button');
 
     timeSlotButtons.forEach(button => {
       button.addEventListener('click', function() {
-        
+
       });
     });
   });
@@ -238,6 +271,6 @@ function showMap(containerId) {
   } else {
     var el = document.getElementsByClassName("map_container")[0].setAttribute("style","display: none");
   }
-  
+
 }
 </script>

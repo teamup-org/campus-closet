@@ -28,9 +28,11 @@ gem 'stimulus-rails'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
 
-# omniauth for google login
+# omniauth
 gem 'omniauth'
-gem 'omniauth-google-oauth2'
+
+# auth0 login
+gem 'omniauth-auth0', '~> 3.0'
 gem 'omniauth-rails_csrf_protection'
 
 # bootstrap for styling

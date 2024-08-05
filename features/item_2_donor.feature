@@ -32,7 +32,8 @@ Scenario: Donor creates a shirt item
     And I include a picture
     And I click on "Create Item"
     Then I should be on a new item page
-    And my name should be assigned
+    And the item should be marked as donated by me
+
 
 Scenario: Donor creates a pants item
     Given I am a logged in donor
@@ -49,7 +50,8 @@ Scenario: Donor creates a pants item
     And I fill in "type" with "pants"
     And I click on "Create Item"
     Then I should be on a new item page
-    And my name should be assigned
+    And the item should be marked as donated by me
+
 
 Scenario: Donor cancel's item creation
     Given I am a logged in donor
