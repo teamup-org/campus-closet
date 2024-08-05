@@ -1,6 +1,6 @@
-# frozen_string_literal: true
-
+# config/routes.rb
 Rails.application.routes.draw do
+  get 'signup', to: 'signups#new', as: 'signup'
   resources :reviews
   resources :time_slots
   resources :requests
@@ -13,17 +13,16 @@ Rails.application.routes.draw do
   resources :types
   resources :colors
   resources :items
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   # Defines the root path route ("/")
-  # root "posts#index"
   root 'items#index'
 
-  #OAuth Routes
+  # OAuth Routes
   get '/auth/google_oauth2', as: 'google_login'
   get '/auth/:google_oauth2/callback', to: 'sessions#create'
   get '/auth/failure', to: redirect('/')
@@ -43,15 +42,10 @@ Rails.application.routes.draw do
   get 'users/:id/student', to: 'users#show_student', as: 'user_student'
   get 'users/:id/donor', to: 'users#show_donor', as: 'user_donor'
 
-  resources :items
-
   resources :items do
     resource :chatroom do
       resources :messages, only: [:create, :destroy]
     end
-  end
-
-  resources :items do
     member do
       patch :image_upload
     end
@@ -62,4 +56,14 @@ Rails.application.routes.draw do
   get 'items/by_type/:type', to: 'items#by_type', as: :items_by_type
   resources :items, except: :show # Exclude the show action from the resources
 
+  # Login routes
+  get 'login', to: 'sessions#new', as: 'login'
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy', as: 'logout'
+
+  # About Us route
+  get 'about', to: 'pages#about', as: 'about'
+
+  # Contact Us route
+  get 'contact', to: 'pages#contact', as: 'contact'
 end
