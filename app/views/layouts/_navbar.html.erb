@@ -22,7 +22,7 @@
     width: 100%;
     z-index: 1000;
     background-color: #F3F3F3;
-    border-bottom: 2px solid black; 
+    border-bottom: 2px solid black;
     border-top: 2px solid black;
     padding: 0 25px;
   }
@@ -38,6 +38,21 @@
     color: black !important;
     text-decoration: underline;
     transition: background-color 0.3s;
+  }
+
+  .nav-button {
+    font-size: 18px;
+    color: black !important;
+    background: none;
+    border: none;
+    text-decoration: underline;
+    padding: 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .nav-button:hover {
+    background-color: #d3d3d3;
   }
 </style>
 
@@ -77,9 +92,9 @@
         </ul>
         <div class="navbar-text">
           <% if current_user.present? %>
-            <%= button_to 'Logout', signout_path, method: :get, data: { turbo: false } %>
+            <%= button_to 'Logout', signout_path, method: :get, class: 'nav-button', data: { turbo: false } %>
           <% else %>
-            <%= button_to 'Login', auth0_login_path, method: :post, data: { turbo: false } %>
+            <%= button_to 'Login', auth0_login_path, method: :post, class: 'nav-button', data: { turbo: false } %>
           <% end %>
         </div>
       </div>
