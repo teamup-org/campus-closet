@@ -14,7 +14,7 @@ class ItemsController < ApplicationController
     @items = Item.page(params[:page]).per(9)
     @types = Type.all
     @sizes = Size.all
-    @featured_items = Item.limit(15)
+    @featured_items = Item.order("RANDOM()").limit(15)
 
     @items = @items.search(params[:query]) if params[:query].present?
 
