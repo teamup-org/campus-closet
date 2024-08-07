@@ -1,0 +1,131 @@
+<style>
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+.carousel {
+  width: 100%;
+  height: 100%;
+  border: 2px black solid;
+  background-color: rgba(71, 68, 68, 0.466);
+  border-radius: 1em;
+}
+.caro-img {
+  margin-top: 7%;
+  border-radius: 1em;
+  width: 350px;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  border: 2px black solid;
+  justify-content: center;
+  color: white;
+  background-image: linear-gradient(rgba(71, 68, 68, 0.466),black);
+}
+.lbl {
+  font-weight: bold;
+}
+.info {
+ margin-top: 7%;
+ display: flex;
+ flex-direction: column;
+ align-items: flex-start;
+}
+
+</style>
+
+<div id="textCarousel" class="carousel slide" data-bs-ride="carousel" style = "width: 900px; height: 700px">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#textCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#textCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#textCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    <button type="button" data-bs-target="#textCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <!--Here the component would query the database and render accordingly-->
+      <div class="d-flex flex-column justify-content-center align-items-center text-center">
+          <h1>Suit Jacket</h1>
+          <div class = "caro-img">Image</div>
+          <div class = "info">
+            <div>
+              <span class = "lbl">Description: </span><span>A slim-fit navy suit jacket </span>
+            </div>
+            <div>
+              <span class = "lbl">Condition: </span><span>Minimal Usage, Perfect Condition</span>
+            </div>
+            <button class = "btn btn-primary">Go To this item</button>
+          </div>          
+      </div>
+    </div>
+    <div class="carousel-item">
+      <!--Here the component would query the database and render accordingly-->
+      <div class="d-flex flex-column justify-content-center align-items-center text-center">
+          <h1>Aqua Cardigan</h1>
+          <div class = "caro-img">Image</div>
+          <div class = "info">
+            <div>
+              <span class = "lbl">Description: </span><span>A soft aquamarine cardigan suitable for both casual and formal wear </span>
+            </div>
+            <div>
+              <span class = "lbl">Condition: </span><span>Used, Good Condition</span>
+            </div>
+            <button class = "btn btn-primary">Go To this item</button>
+          </div>          
+      </div>
+    </div>
+    <div class="carousel-item">
+      <!--Here the component would query the database and render accordingly-->
+      <div class="d-flex flex-column justify-content-center align-items-center text-center">
+          <h1>Blue Jeans</h1>
+          <div class = "caro-img">Image</div>
+          <div class = "info">
+            <div>
+              <span class = "lbl">Description: </span><span>Bootcut light-wash jeans </span>
+            </div>
+            <div>
+              <span class = "lbl">Condition: </span><span>Minimal Usage, Perfect Condition </span>
+            </div>
+            <button class = "btn btn-primary">Go To this item</button>
+          </div>          
+      </div>
+    </div>
+    <div class="carousel-item">
+      <!--Here the component would query the database and render accordingly-->
+      <div class="d-flex flex-column justify-content-center align-items-center text center">
+          <h1>A&M Sweatshirt</h1>
+          <div class = "caro-img">Image</div>
+          <div class = "info">
+            <div>
+              <span class = "lbl">Description: </span><span>A large maroon A&M sweatshirt with the logo in white</span>
+            </div>
+            <div>
+              <span class = "lbl">Condition: </span><span>Light Usage, Great Condition</span>
+            </div>
+            <button class = "btn btn-primary">Go To this item</button>
+          </div>          
+      </div>
+    </div>
+
+
+
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#textCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true">
+    </span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#textCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true">
+
+    </span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
