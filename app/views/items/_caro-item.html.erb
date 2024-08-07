@@ -1,0 +1,44 @@
+<style>
+.caro-img {
+  margin-top: 7%;
+  border-radius: 1em;
+  width: 350px;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  border: 2px black solid;
+  justify-content: center;
+  color: white;
+  background-image: linear-gradient(rgba(71, 68, 68, 0.466),black);
+}
+.lbl {
+  font-weight: bold;
+}
+.info {
+ width: 350px;
+ margin-top: 5%;
+ margin-bottom: 2%;
+ display: flex;
+ flex-direction: column;
+ align-items: flex-start;
+ font-size: 25px;
+}
+</style>
+
+<div class="d-flex flex-column justify-content-center align-items-center text-center ">
+  <h1><%= item.description %></h1>
+  <% if item.image_url.present? %>
+    <%= image_tag item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: scale-down; height: 250px;" %>
+    <% else %>
+        <div class = "caro-img">Image</div>
+    <% end %>
+  <div class = "info">
+  <div>
+      <span class = "lbl">Size: </span><span><%= item.size.name %></span>
+  </div>
+  <div>
+      <span class = "lbl">Condition: </span><span><%= item.condition.name %></span>
+  </div>
+      <button class = "btn btn-primary">View Details</button>
+  </div>
+</div>

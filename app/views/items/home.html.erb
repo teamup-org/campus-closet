@@ -12,7 +12,9 @@
     </div>
   </div>
 
-  <h2 class="text-center mt-4 mb-4">Featured Listings Go Here</h2>
+  <div class = "d-flex justify-content-center align-items-center">
+    <%= render 'carousel' %>
+  </div>
 
   <div class="row">
     <% Type.all.each do |type| %>
