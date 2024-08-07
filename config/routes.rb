@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get 'carousel/page'
-  get 'welcome/page'
+  
   resources :reviews
   resources :time_slots
   resources :requests
@@ -24,7 +23,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   root 'items#index'
-
+  get 'carousel', to: 'items#carousel', as: 'carousel_items'
+  
   #OAuth Routes
   get '/auth/google_oauth2', as: 'google_login'
   get '/auth/:google_oauth2/callback', to: 'sessions#create'
@@ -32,8 +32,10 @@ Rails.application.routes.draw do
   get '/signout', to: 'sessions#destroy', as: 'signout'
 
   #Draft Routes
+  get 'carousel/page'
+  get 'welcome/page'
   get '/welcome', to: 'welcome#page'
-  get '/carousel', to: 'carousel#page'
+  get '/carousel_page', to: 'carousel#page'
 
   # chat routes
   # mount ActionCable.server => '/cable'

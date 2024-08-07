@@ -12,14 +12,16 @@ class ItemsController < ApplicationController
   # GET /items or /items.json
   def index
     @items = Item.all
-    @sizes = Size.all
+    @sizes = Size.all   
 
     return unless params[:size] || params[:color] || params[:condition] || params[:gender]
 
     filter_items(params[:size], params[:color], params[:condition],
                  params[:gender])
   end
-
+  def carousel
+    @random_items = Item.order('RANDOM()').limit(7)
+  end
   # GET /items/1 or /items/1.json
   def show
     # DonorMailer.with(user: current_user).confirm_time_to_donor_email.deliver_later
