@@ -26,7 +26,7 @@ class ItemsController < ApplicationController
   def home
     @items = Item.all
     @sizes = Size.all
-    @featured_items = Item.limit(15)
+    @featured_items = Item.order("RANDOM()").limit(15)
   end
 
   # GET /items/1 or /items/1.json
