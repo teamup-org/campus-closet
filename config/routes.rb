@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   # Defines the root path route ("/")
-  root 'items#index'
+  root 'items#home'
 
   # Auth0 routes
   get '/auth/auth0', as: 'auth0_login'
@@ -46,6 +46,9 @@ Rails.application.routes.draw do
   resources :items do
     resource :chatroom do
       resources :messages, only: [:create, :destroy]
+    end
+    collection do
+      get 'home'
     end
     member do
       patch :image_upload
