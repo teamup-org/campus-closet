@@ -1,28 +1,54 @@
-
 <% if flash[:alert] %>
   <div class="alert alert-danger"><%= flash[:alert] %></div>
 <% end %>
 <div class="container">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <% Type.all.each do |type| %>
-      <%= link_to "View " + type.name, items_by_type_path(type: type.name), class: "nav-link" %>
-    <% end %>
-  </nav>
-  <%= render "filter" %>
+
+  <%= form_with url: items_path, method: :get, local: true do %>
+    <div class="input-group mb-3">
+      <%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Search for items..." %>
+      <div class="input-group-append">
+        <%= submit_tag "Search", class: "btn btn-outline-secondary" %>
+      </div>
+    </div>
+  <% end %>
+
   <div class="row">
-    <% @items.each do |item| %>
-      <% if item.status.name == "Available" %>
-        <div class="col-md-3 mb-3">
-          <div class="card">
-            <div class="card-body">
-              <%= render item %>
-              <p class="card-text">
-                <%= link_to "Show this item", item, class: "btn btn-primary" %>
-              </p>
-            </div>
-          </div>
+    <div class="col-md-3">
+      <%= render "filter" %>
+    </div>
+    <div class="col-md-9">
+      <% if @items.any? %>
+        <div class="row">
+          <% @items.each do |item| %>
+            <% if item.status.name == "Available" %>
+              <div class="col-md-4 mb-3">
+                <div class="card">
+                  <% if item.image_url.present? %>
+                    <%= image_tag item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: scale-down; height: 250px;" %>
+                  <% else %>
+                    <%= image_tag "placeholder.jpeg", class: "card-img-top img-fluid", alt: "No Image Available", style: "object-fit: scale-down; height: 250px;" %>
+                  <% end %>
+                  <div class="card-body">
+                    <h5 class="card-title"><%= item.type.name %></h5>
+                    <p class="card-text">
+                      <strong>Gender:</strong> <%= item.gender.name %><br>
+                      <strong>Size:</strong> <%= item.size.name %><br>
+                      <strong>Condition:</strong> <%= item.condition.name %><br>
+                      <%= item.description %>
+                    </p>
+                    <%= link_to "View Details", item, class: "btn btn-primary" %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
         </div>
+        <div class="pagination">
+          <%= paginate @items %>
+        </div>
+      <% else %>
+        <p class="display-5 font-weight-bold text-center">No Results Found</p>
       <% end %>
-    <% end %>
+    </div>
   </div>
 </div>

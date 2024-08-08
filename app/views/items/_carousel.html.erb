@@ -1,0 +1,66 @@
+<style>
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+.carousel {
+  width: 900px;
+  height: 700px;
+  border: 2px black solid;
+  background-color: rgba(71, 68, 68, 0.466);
+  border-radius: 1em;
+  margin-bottom: 20px;
+}
+.holder {
+    display: flex;
+    flex-direction: column;
+}
+.title {
+    font-size: 40px;
+    text-align: center;
+    font-weight: bold;
+}
+</style>
+<div class = "holder">
+<div class = "title" >Featured Items </div>
+<div id="textCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <% @featured_items.each_with_index do |item, index| %>
+        <button type="button" data-bs-target="#textCarousel" data-bs-slide-to="<%= index %>" 
+        class="<%= 'active' if index == 0 %>" aria-current="<%= 'true' if index == 0 %>" 
+        aria-label="Slide <%= index + 1 %>"></button>
+    <% end %>
+  </div>
+
+  <div class="carousel-inner">
+  <% if @featured_items.present? %>
+    <% @featured_items.each_with_index do |item, index| %>
+      <div class="carousel-item <%= 'active' if index == 0 %>">
+        <%= render 'caro-item', item: item %>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No items available</p>
+  <% end %> 
+
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#textCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true">
+    </span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#textCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true">
+
+    </span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+</div>
