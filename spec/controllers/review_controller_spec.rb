@@ -40,16 +40,20 @@ RSpec.describe ReviewsController, type: :controller do
       it 'creates a new Review' do
         OmniAuth.config.test_mode = true
         OmniAuth.config.add_mock(
-          :google_oauth2,
+          :auth0,
+          uid: 'auth0|123456789',
+          provider: 'auth0',
           info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
         )
-        user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+        user = User.from_omniauth(OmniAuth.config.mock_auth[:auth0])
         session[:user_id] = user.id
+        
         expect do
           post :create, params: { review: valid_attributes }
         end.to change(Review, :count).by(1)
       end
     end
+  
 
     context 'with invalid params' do
       it 'does not create a new Review' do

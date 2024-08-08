@@ -1,0 +1,158 @@
+<div class="listing-card-pickup">
+  <div class="card-pickup">
+    <div class="card-body-pickup">
+      <div class="image-container-pickup">
+        <img src="<%= @item.image_url.present? ? @item.image_url : 'placeholder_image_url' %>" alt="Item Image" class="item-image">
+      </div>
+      <div class="item-info">
+        <p>Description: <%= @item.description %></p>
+        <p>Condition: <%= @item.condition.name %></p>
+        <p>Size: <%= @item.size.name %></p>
+        <p>Type: <%= @item.type.name %></p>
+        <p>Gender: <%= @item.gender.name %></p>
+        <p>Color: <%= @item.color.name %></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="donor-info">
+  <div class="donor-details">
+    <h2 class="donor-title">Donor</h2>
+    <p class="donor-name"><%= @item.user.first %> <%= @item.user.last %></p>
+  </div>
+</div>
+
+<div id="form-container-p" class="form-container-pickup">
+  <h3>Message (Max 200 characters)</h3>
+  <textarea id="message" maxlength="200" rows="4"></textarea>
+  <p>Remaining characters: <span id="remaining-characters">200</span></p>
+  <h3>Preferred Pickup Date and Time</h3>
+  <div id="calendar-container" class="calendar-container">
+    <div class="text-center">
+      <%= month_calendar(events: @time_slots) do |date, time_slots| %>
+        <div class="day">
+          <h3 class="date-header"><%= date.strftime('%B %d, %Y') %></h3>
+          <% time_slots.select { |time_slot| time_slot.status == 'available' }.each do |time_slot| %>
+            <div class="time-slot">
+              <p class="time-slot-available">
+                <%= button_tag "#{time_slot[:start_time].strftime('%I:%M %p')} to #{time_slot[:end_time].strftime('%I:%M %p')}", id: "time_slot_button", data: { time_slot_id: time_slot.id ,donor_id: time_slot.donor_id, receiver_id: current_user.id, item_id: @item.id} %>
+              </p>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <!--<button id="send-request-button">Send Request</button>-->
+</div>
+
+<script>
+  function initializePage() {
+    const formContainer = document.getElementById('form-container-p');
+    const calendarContainer = document.getElementById('calendar-container');
+
+    function adjustFormWidth() {
+      const calendarWidth = calendarContainer.offsetWidth;
+      const maxWidth = parseInt(window.getComputedStyle(formContainer).maxWidth, 10);
+      const newWidth = Math.min(calendarWidth, maxWidth);
+      formContainer.style.width = newWidth + 'px';
+    }
+
+    adjustFormWidth();
+
+    window.addEventListener('resize', adjustFormWidth);
+
+    const textarea = document.querySelector('textarea');
+    const remainingCharacters = document.getElementById('remaining-characters');
+
+    textarea.addEventListener('input', function() {
+      const maxLength = 200;
+      const currentLength = textarea.value.length;
+      remainingCharacters.textContent = maxLength - currentLength;
+    });
+
+    const timeSlotButtons = document.querySelectorAll('.time-slot button');
+
+    timeSlotButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        if (window.confirm('Are you sure you want to request this timeslot?')) {
+          console.log(this.dataset);
+          const timeSlotId = this.dataset.timeSlotId;
+          const donorId = this.dataset.donorId;
+          const receiverId = this.dataset.receiverId;
+          const itemId = this.dataset.itemId;
+          const message = document.getElementById('message').value;
+
+          const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+          fetch(`/time_slots/${timeSlotId}/mark_unavailable`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': csrfToken
+            },
+            credentials: 'same-origin',
+          }).then(response => {
+            if (response.ok) {
+              console.log('Time slot requested');
+            } else {
+              alert('Time slot failed to update - was not requested');
+            }
+          }).catch(error => {
+            console.error('Error:', error);
+          });
+
+          fetch(`/items/${itemId}/mark_unavailable`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': csrfToken
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({})
+          }).then(response => {
+            if (response.ok) {
+              console.log('Item marked unavailable');
+            } else {
+              alert('Item failed to update');
+            }
+          }).catch(error => {
+            console.error('Error:', error);
+          });
+
+          fetch('/requests', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': csrfToken
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+              request: {
+                item_id: itemId,
+                donor_id: donorId,
+                receiver_id: receiverId,
+                time_slot_id: timeSlotId,
+                message: message
+              }
+            })
+          })
+          .then(response => {
+            if (response.ok) {
+              console.log("created new request");
+              location.reload();
+            } else {
+              alert('Failed to create clothing request.');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+        }
+      });
+    });
+  }
+
+  initializePage();
+</script>

@@ -4,12 +4,13 @@ Given('the following admin emails exist:') do |table|
   table.hashes.each do |row|
     email = row['email']
     if email.include?('admin')
-      User.create(first: 'Test', last: 'Admin', email:, student: false, donor: true, admin: true)
+      User.create!(first: 'Test', last: 'Admin', email: email, student: false, donor: true, admin: true)
     else
-      User.create(first: 'Test', last: 'User', email:, student: false, donor: true)
+      User.create!(first: 'Test', last: 'User', email: email, student: false, donor: true)
     end
   end
 end
+
 
 Given('I try to go to the users index page') do
   visit('/users')

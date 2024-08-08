@@ -1,135 +1,95 @@
+<!-- show.html.erb -->
 <% if !current_user %>
-  <div style="display: flex; justify-content: center; align-items: center;">
-    <div style="width: 50%; max-width: 500px; padding: 5px; border: 1px solid #ccc; border-radius: 5px;">
-      <div class="card">
-        <div class="card-body">
-          <%= render @item %>
-      </div>
-    </div>
-  </div>
-
-<% elsif current_user.id == @item.user.id %>
-  <div style="display: flex; justify-content: center; align-items: center;">
-    <div style="width: 50%; max-width: 500px; padding: 5px; border: 1px solid #ccc; border-radius: 5px;">
-      <div class="card">
-        <div class="card-body">
-          <%= render @item %>
-            <div class="card-text">
-              <%= link_to "Edit this item", edit_item_path(@item), class: "btn btn-outline-primary" %>
-              <%= button_to "Destroy this item", @item, method: :delete, class: "btn btn-danger btn-sm" %>
-            </div>
-      </div>
-    </div>
-  </div>
-
-<% else %>
-  <div style="display: flex;">
-  <div style="display: flex; justify-content: center; align-items: center;">
-    <div style="width: 50%; max-width: 500px; padding: 5px; border: 1px solid #ccc; border-radius: 5px;">
-      <div class="card">
-        <div class="card-body">
-          <%= render @item %>
-      </div>
-    </div>
-  </div>
-    <div style="flex: 1; padding: 10px;">
-      <div style="float: right;">
-        <%= month_calendar(events: @time_slots, class: "text-center") do |date, time_slots| %>
-          <div class="day">
-            <h3 style="font-size: 18px; color: #2c3e50; font-weight: bold;"><%= date.strftime('%B %d, %Y') %></h3>
-            <% time_slots.select { |time_slot| time_slot.status == 'available' }.each do |time_slot| %>
-              <div class="time-slot">
-                <p style="background-color: #2ecc71; padding: 10px; margin: 10px 0; font-family: 'Arial', sans-serif; font-size: 16px; color: #2c3e50;">
-                  <%= button_tag "#{time_slot[:start_time].strftime('%I:%M %p')} to #{time_slot[:end_time].strftime('%I:%M %p')}", id: "time_slot_button", data: { time_slot_id: time_slot.id ,donor_id: time_slot.donor_id, receiver_id: current_user.id, item_id: @item.id} %>
-                </p>
-              </div>
-            <% end %>
-          </div>
+  <div class="item-details">
+    <div class="image-container">
+        <% if @item.image.attached? %>
+          <%= image_tag @item.image, class: "item-image" %>
+        <% else %>
+          <div class="placeholder-image">No Image Available</div>
         <% end %>
-      </div>
+    </div>
+    <div class="item-info">
+      <p>Type: <%= @item.type.name %></p>
+      <p>Size: <%= @item.size.name %></p>
+      <p>Condition: <%= @item.condition.name %></p>
+      <p>Gender: <%= @item.gender.name %></p>
+      <p>Color: <%= @item.color.name %></p>
+      <p>Description: <%= @item.description %></p>
     </div>
   </div>
+  
+<% elsif current_user.id == @item.user.id %>
+  <div class="item-details">
+      <div class="image-container">
+            <% if @item.image.attached? %>
+              <%= image_tag @item.image, class: "item-image" %>
+            <% else %>
+              <div class="placeholder-image">No Image Available</div>
+            <% end %>
+      </div>
+    <div class="item-info">
+      <p>Type: <%= @item.type.name %></p>
+      <p>Size: <%= @item.size.name %></p>
+      <p>Condition: <%= @item.condition.name %></p>
+      <p>Gender: <%= @item.gender.name %></p>
+      <p>Color: <%= @item.color.name %></p>
+      <p>Description: <%= @item.description %></p>
+      <%= link_to "Edit this item", edit_item_path(@item), class: "btn btn-outline-primary" %>
+      <%= button_to "Destroy this item", @item, method: :delete, class: "btn btn-danger btn-sm" %>
+    </div>
+  </div>
+<% else %>
+  <div class="item-details">
+        <div class="image-container">
+            <% if @item.image.attached? %>
+              <%= image_tag @item.image, class: "item-image" %>
+            <% else %>
+              <div class="placeholder-image">No Image Available</div>
+            <% end %>
+        </div>
+    <div class="item-info">
+      <p>Type: <%= @item.type.name %></p>
+      <p>Size: <%= @item.size.name %></p>
+      <p>Condition: <%= @item.condition.name %></p>
+      <p>Gender: <%= @item.gender.name %></p>
+      <p>Color: <%= @item.color.name %></p>
+      <p>Description: <%= @item.description %></p>
+    </div>
+  </div>
+      <div class="donor-info">
+        <div class="donor-details">
+          <h2 class="donor-title">Donor</h2>
+          <p class="donor-name"><%= @item.user.first %> <%= @item.user.last %></p>
+        </div>
+      
+
+        <%= link_to "Claim", pickup_request_item_path(@item), class: "btn btn-primary btn-claim" %>
+        <%= link_to "Contact Donor", item_chatroom_path(@item), class: "btn btn-outline-primary btn-contact" %>
+      </div>
+      
 <% end %>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const timeSlotButtons = document.querySelectorAll('.time-slot button');
+<!-- Similar Listings block -->
+<div class="similar-listings">
+  <h3 class="similar-listings-header">Similar Listings</h3>
+</div>
+<div class="listings-container">
+  <!-- Loop through similar listings and render them -->
+  <% if @similar_items.any? %>
+    <% @similar_items.each do |similar_item| %>
+      <div class="listing-card">
+        <div class="card">
+          <div class="card-body">
+            <%= render similar_item %>
+            <p class="card-text">
+              <%= link_to "Show this item", similar_item, class: "btn btn-primary" %>
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No similar items found.</p>
+  <% end %>
+</div>
 
-    timeSlotButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        if (window.confirm('Are you sure you want to request this timeslot?')) {
-          console.log(this.dataset)
-          const timeSlotId = this.dataset.timeSlotId;
-          const donorId = this.dataset.donorId;
-          const receiverId = this.dataset.receiverId;
-          const itemId = this.dataset.itemId;
-
-          const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-
-          fetch(`/time_slots/${timeSlotId}/mark_unavailable`, {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-Token': csrfToken
-            },
-            credentials: 'same-origin',
-          }).then(response => {
-            if (response.ok) {
-              console.log('Time slot requested');
-            } else {
-              alert('Time slot failed to update - was not requested');
-            }
-          }).catch(error => {
-            console.error('Error:', error);
-          });
-
-          fetch(`/items/${itemId}/mark_unavailable`, {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-Token': csrfToken
-            },
-            credentials: 'same-origin',
-            body: JSON.stringify({})
-          }).then(response => {
-            if (response.ok) {
-              console.log('Item marked unavailable');
-            } else {
-              alert('Item failed to update');
-            }
-          }).catch(error => {
-            console.error('Error:', error);
-          });
-
-        fetch('/requests', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': csrfToken
-          },
-          credentials: 'same-origin',
-          body: JSON.stringify({
-            request: {
-              item_id: itemId, 
-              donor_id: donorId,
-              receiver_id: receiverId,
-              time_slot_id: timeSlotId
-            }
-          })
-        })
-        .then(response => {
-          if (response.ok) {
-            console.log("created new request")
-            location.reload();
-          } else {
-            alert('Failed to create clothing request.');
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-        }
-      });
-    });
-  });
-</script>

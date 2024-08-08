@@ -58,3 +58,18 @@ require 'simplecov'
 SimpleCov.command_name 'Cucumber'
 
 Capybara.javascript_driver = :selenium_chrome_headless
+
+require 'aws-sdk-s3'
+
+Before do
+  Aws.config.update({
+    region: 'us-east-1',
+    credentials: Aws::Credentials.new('dummy_access_key_id', 'dummy_secret_access_key')
+  })
+
+  Aws.config[:s3] = {
+    stub_responses: {
+      put_object: {}
+    }
+  }
+end

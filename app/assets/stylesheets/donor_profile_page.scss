@@ -1,0 +1,112 @@
+.header-account-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.center-header {
+  text-align: center;
+  margin: 0;
+}
+
+.header-container {
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.header-container .btn{
+  margin: 5px 0;
+}
+
+.edit-profile {
+  display: block;
+  margin: 10px auto 0;
+}
+
+.account-details-container {
+  max-width: 300px; 
+}
+
+.time-slots-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 20px;
+}
+
+.time-slots-container .btn {
+  margin-bottom: 10px;
+}
+
+
+.content-container {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start; 
+}
+
+.section {
+  width: 100%;
+}
+
+.bottom-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  bottom: 20px; 
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.bottom-container .btn {
+  margin: 10px 0; 
+}
+
+
+.notice {
+  color: green;
+}
+
+.card img {
+  object-fit: contain;
+  height: 250px;
+}
+
+.map-container {
+  display: none;
+  background-color: #F5F5F5;
+}
+
+.chat-btn-container .btn {
+  margin-bottom: 10px;
+}
+
+
+.add-new-item-btn {
+  width: 150px; /* Set a fixed width */
+
+  background-color: #3f42ff; 
+  color: white; 
+  font-size: 16px; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+.add-new-item-btn:hover {
+  background-color: #041d71; 
+}
+

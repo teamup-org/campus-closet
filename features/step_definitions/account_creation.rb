@@ -4,11 +4,9 @@ Given('the following emails have an account associated with them:') do |table|
   table.hashes.each do |row|
     email = row['email']
     if email.ends_with?('.com')
-      User.create(first: 'Test', last: 'Donor', email:, student: false, donor: true,
-                  address: '125 Spence St, College Station, TX 77843')
+      User.create!(first: 'Test', last: 'Donor', email: email, student: false, donor: true, address: '125 Spence St, College Station, TX 77843')
     else
-      User.create(first: 'Test', last: 'Student', email:, student: true, donor: false,
-                  address: '907 Cross St, College Station, TX 77840')
+      User.create!(first: 'Test', last: 'Student', email: email, student: true, donor: false, address: '907 Cross St, College Station, TX 77840')
     end
   end
 end
@@ -19,10 +17,16 @@ end
 
 When('I click {string}, {string}') do |link, email|
   OmniAuth.config.test_mode = true
-  OmniAuth.config.add_mock(
-    :google_oauth2,
-    info: { email: }
-  )
+  OmniAuth.config.mock_auth[:auth0] = OmniAuth::AuthHash.new({
+    provider: 'auth0',
+    uid: '123545',
+    info: {
+      email: email,
+      first_name: 'Test',
+      last_name: 'User',
+      name: 'Test User'
+    }
+  })
   click_on link
 end
 
@@ -40,23 +44,29 @@ Then('I should be put on the homepage') do
 end
 
 Given('I have an account, {string}') do |email|
-  user_exists = User.where(email:).exists?
+  user_exists = User.where(email: email).exists?
   expect(user_exists).to eq(true)
 end
 
 Given('I do not have an account already, {string}') do |email|
-  user_exists = User.where(email:).exists?
+  user_exists = User.where(email: email).exists?
   expect(user_exists).to eq(false)
 end
 
 Given('I am on the account creation page, {string}') do |email|
   visit('/')
   OmniAuth.config.test_mode = true
-  OmniAuth.config.add_mock(
-    :google_oauth2,
-    info: { email: }
-  )
-  click_on 'Login with Google'
+  OmniAuth.config.mock_auth[:auth0] = OmniAuth::AuthHash.new({
+    provider: 'auth0',
+    uid: '123545',
+    info: {
+      email: email,
+      first_name: 'Test',
+      last_name: 'User',
+      name: 'Test User'
+    }
+  })
+  click_on 'Login'
 end
 
 When('I enter {string} in {string}') do |value, field|

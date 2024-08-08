@@ -1,0 +1,211 @@
+/* First Name */
+.first-name-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    left: 27.64%;
+    right: 27.83%;
+    top: 13.86%;
+    bottom: 83.69%;
+  }
+  
+  .first-name-label {
+    font-family: 'Comic Sans MS';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 21px;
+    color: #000000;
+    margin-bottom: 5px; 
+  }
+  
+  .first-name-input {
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    width: 100%; 
+  }
+
+  .first-name-value {
+    font-family: 'Comic Sans MS';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 21px;
+    color: #000000;
+  }
+
+  
+  
+  /* Last Name */
+
+  .last-name-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    left: 27.64%;
+    right: 27.83%;
+    top: 23.99%;
+    bottom: 68.23%;
+  }
+  
+  .last-name-label {
+    font-family: 'Comic Sans MS';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 21px;
+    color: #000000;
+    margin-bottom: 5px; 
+  }
+  
+  .last-name-input {
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    width: 100%; 
+  }
+  
+  .last-name-value {
+    font-family: 'Comic Sans MS';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 21px;
+    color: #000000;
+  }
+  
+  
+  
+  /* Email */
+  
+  .email-label {
+    position: absolute;
+    left: 27.64%;
+    right: 66.02%;
+    top: 34.12%;
+    bottom: 63.43%;
+    font-family: 'Comic Sans MS';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 21px;
+    color: #000000;
+  }
+  
+  .email-input {
+    position: absolute;
+    left: 27.64%;
+    right: 27.83%;
+    top: 37.42%;
+    bottom: 58.1%;
+    background: #FFFFFF;
+    border: 2px solid #000000;
+  }
+  
+  /* Phone Number */
+  
+  .phone-label {
+    position: absolute;
+    left: 27.64%;
+    right: 60.16%;
+    top: 44.24%;
+    bottom: 53.3%;
+    font-family: 'Comic Sans MS';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 21px;
+    color: #000000;
+  }
+  
+  .phone-input {
+    position: absolute;
+    left: 27.64%;
+    right: 27.83%;
+    top: 47.55%;
+    bottom: 47.97%;
+    background: #FFFFFF;
+    border: 2px solid #000000;
+  }
+  
+  
+  /* Address */
+  
+  .address-label {
+    position: absolute;
+    left: 27.64%;
+    right: 68.65%;
+    top: 54.99%;
+    bottom: 43.56%;
+    font-family: 'Comic Sans MS';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 21px;
+    color: #000000;
+  }
+  
+  .address-input {
+    position: absolute;
+    left: 27.64%;
+    right: 27.83%;
+    top: 57.29%;
+    bottom: 38.23%;
+    background: #FFFFFF;
+    border: 2px solid #000000;
+  }
+  
+  
+  /* Donor Checkbox */
+  
+  .donor-checkbox-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    left: 27.64%;
+    right: 27.83%;
+    top: 64.99%;
+    bottom: 28.23%;
+  }
+  
+  .donor-checkbox-label {
+    font-family: 'Comic Sans MS';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 21px;
+    color: #000000;
+    margin-bottom: 5px;
+  }
+  
+  .donor-checkbox-input {
+    background: #FFFFFF;
+    border: 2px solid #000000;
+  }
+
+  /* Sign Up Button */
+  .sign-up-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    left: 27.64%;
+    right: 64.65%;
+    top: 72.84%;
+  }
+  
+  .sign-up-button {
+    background: #E1E1E1;
+    border: 2px solid #000000;
+    font-family: 'Comic Sans MS';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 21px;
+    text-align: center;
+    color: #000000;
+  }
+  
+  

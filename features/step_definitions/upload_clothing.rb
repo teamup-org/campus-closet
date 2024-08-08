@@ -4,14 +4,28 @@ Given('I am on the items page') do
   visit('/items')
 end
 
+
 Given('I am logged in') do
-  User.create(first: 'Test', last: 'Donor', email: 'testdonor@gmail.com', student: false, donor: true)
+  User.create!(first: 'Test', last: 'Donor', email: 'testdonor@gmail.edu', student: false, donor: true)
   OmniAuth.config.test_mode = true
-  OmniAuth.config.add_mock(
-    :google_oauth2,
-    info: { email: 'testdonor@gmail.com' }
-  )
-  click_on 'Login with Google'
+  OmniAuth.config.mock_auth[:auth0] = OmniAuth::AuthHash.new({
+    provider: 'auth0',
+    uid: '435',
+    info: {
+      email: 'testdonor@gmail.com',
+      first_name: 'Test',
+      last_name: 'Donor',
+      name: 'Test Donor'
+    },
+    extra: {
+      raw_info: {
+        student: false,
+        donor: true
+      }
+    }
+  })
+  visit('/')
+  click_on 'Login'
 end
 
 When('I click on {string}') do |button_text|

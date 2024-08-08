@@ -4,7 +4,7 @@
 class ItemsController < ApplicationController
   include ActionController::Cookies
 
-  before_action :set_item, only: %i[show edit update destroy]
+  before_action :set_item, only: %i[show edit update destroy pickup_request]
   skip_before_action :set_item, only: [:by_type]
   before_action :authorize_item_edit, only: %i[edit update]
   before_action :set_conds, only: %i[index by_type]
@@ -22,7 +22,7 @@ class ItemsController < ApplicationController
     filter_items(params[:size], params[:color], params[:condition],
                  params[:gender], params[:type])
   end
-
+  
   def home
     @items = Item.all
     @sizes = Size.all
@@ -31,9 +31,12 @@ class ItemsController < ApplicationController
 
   # GET /items/1 or /items/1.json
   def show
-    # DonorMailer.with(user: current_user).confirm_time_to_donor_email.deliver_later
+    #
+    @similar_items = Item.where(type_id: @item.type_id).where.not(id: @item.id).order('RANDOM()').limit(5) # limited to 5 similar items randomly select 5 items so that same items are not allows displayed
+  end
+
+  def pickup_request
     @time_slots = @item.user.time_slots
-    # Tell the UserMailer to send a welcome email after save
   end
 
   # GET /items/new
@@ -87,6 +90,7 @@ class ItemsController < ApplicationController
 
   def by_type
     @type = Type.find_by(name: params[:type])
+    
     @items = Item.where(type_id: @type.id)
 
     @sizes = Size.where(type_id: @type.id)

@@ -27,25 +27,51 @@ Given('the following items exist with user_ids:') do |table|
 end
 
 Given('I am logged in as a student') do
-  User.create(first: 'Test', last: 'Student', email: 'test_student@tamu.edu', student: true, donor: false)
-  visit('/')
+  User.create!(first: 'test', last: 'Student', email: 'test_student@tamu.edu', student: true, donor: false)
+  
   OmniAuth.config.test_mode = true
-  OmniAuth.config.add_mock(
-    :google_oauth2,
-    info: { first: 'Test', last: 'Student', email: 'test_student@tamu.edu' }
-  )
-  click_on 'Login with Google'
+  OmniAuth.config.mock_auth[:auth0] = OmniAuth::AuthHash.new({
+    provider: 'auth0',
+    uid: '557',
+    info: {
+      email: 'test_student@tamu.edu',
+      first_name: 'test',
+      last_name: 'Student',
+      name: 'test Student'
+    },
+    extra: {
+      raw_info: {
+        student: true,
+        donor: false
+      }
+    }
+  })
+  visit('/')
+  click_on 'Login'
 end
 
+
 Given('I am logged in as a donor') do
-  User.create(first: 'Test', last: 'Donor', email: 'test_donor@gmail.com', student: false, donor: true)
-  visit('/')
+  donor = User.create!(first: 'Test', last: 'Donor', email: 'test_donor@gmail.com', student: false, donor: true)
+  
   OmniAuth.config.test_mode = true
-  OmniAuth.config.add_mock(
-    :google_oauth2,
-    info: { first: 'Test', last: 'Donor', email: 'test_donor@gmail.com' }
-  )
-  click_on 'Login with Google'
+  OmniAuth.config.mock_auth[:auth0] = OmniAuth::AuthHash.new({
+    provider: 'auth0',
+    uid: '556',
+    info: {
+      email: 'test_donor@gmail.com',
+      first_name: 'Test',
+      last_name: 'Donor',
+      name: 'Test Donor'
+    },
+    extra: {
+      raw_info: {
+        donor: true
+      }
+    }
+  })
+  visit('/')
+  click_on 'Login'
 end
 
 When('I click on a link with href {string} and text {string}') do |href_value, link_text|
